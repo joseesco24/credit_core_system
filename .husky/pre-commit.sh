@@ -48,8 +48,9 @@ prettier "./src/**/*.{json,graphql}" --write
 # ** info: exporting dependencies if needed
 if [[ " ${staged_files[@]} " =~ " poetry.lock " ]]; then
 	print_title "Exporting Dependencies"
-	poetry export --without-hashes --format=requirements.txt > ./requirements.txt
-	git add ./requirements.txt
+	poetry export --without-hashes --only dev --format=requirements.txt > ./dependencies/develop/requirements.txt
+	poetry export --without-hashes --format=requirements.txt > ./dependencies/production/requirements.txt
+	git add ./dependencies
 fi
 
 # ** info: updating staged files
