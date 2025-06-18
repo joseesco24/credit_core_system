@@ -1,10 +1,4 @@
-# !/usr/bin/python3
-# type: ignore
-
-# ** info: python imports
 import posixpath
-
-# ** info: typing imports
 from typing import Self
 
 __all__: list[str] = ["PathProvider"]

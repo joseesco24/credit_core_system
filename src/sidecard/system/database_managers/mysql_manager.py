@@ -1,28 +1,14 @@
-# !/usr/bin/python3
-# type: ignore
-
-# ** info: python imports
 import gc
 import logging
-
-# ** info: typing imports
 from typing import Self
-
-# ** info: fastapi imports
 from fastapi import HTTPException
 from fastapi import status
 from sqlmodel import Session
-
-# ** info: sqlmodel imports
 from sqlmodel import create_engine
 from sqlalchemy import URL
-
-# **info: sqlalchemy imports
 from sqlalchemy import text
 from src.sidecard.system.artifacts.env_provider import EnvProvider
 from src.sidecard.system.artifacts.uuid_provider import UuidProvider
-
-# ** info: sidecards.artifacts imports
 from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
 
 __all__: list[str] = ["MySQLManager"]
@@ -32,9 +18,9 @@ class MySQLManager:
     instances: set = set()
 
     def __init__(self: Self, password: str, database: str, username: str, drivername: str, host: str, port: int, query: dict) -> None:
-        self.env_provider: EnvProvider = EnvProvider()
+        self.env_provider: EnvProvider = EnvProvider()  # type: ignore
         self._uuid_provider: UuidProvider = UuidProvider()
-        self._url = URL(drivername=drivername, password=password, database=database, username=username, query=query, host=host, port=port)
+        self._url = URL(drivername=drivername, password=password, database=database, username=username, query=query, host=host, port=port)  # type: ignore
         self._date_time_provider: DatetimeProvider = DatetimeProvider()
         self._engine = create_engine(url=self._url, echo=self.env_provider.database_logs)
         self._connection_id: str = self._uuid_provider.get_str_uuid()
@@ -57,7 +43,7 @@ class MySQLManager:
         instances_count: int = MySQLManager.instances.__len__()
         logging.debug(f"mysql instances count: {instances_count}")
 
-        return self._session
+        return self._session  # type: ignore
 
     def _check_session_health(self: Self) -> None:
         if self._test_qeury() is True:
@@ -87,7 +73,7 @@ class MySQLManager:
             return False
 
         try:
-            self._session.exec(text(r"select 1"))
+            self._session.exec(text(r"select 1"))  # type: ignore
             return True
 
         except Exception:
@@ -120,7 +106,7 @@ class MySQLManager:
 
         if self._connection_id is not None:
             MySQLManager.instances.remove(self._connection_id)
-            self._connection_id = None
+            self._connection_id = None  # type: ignore
 
         logging.warning("connection ended")
 

@@ -1,9 +1,4 @@
-# !/usr/bin/python3
-
-# ** info: python imports
 from typing import Dict
-
-# ** info: typing imports
 from typing import Self
 from contextvars import Context
 

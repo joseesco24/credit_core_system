@@ -1,43 +1,29 @@
-# !/usr/bin/python3
-# type: ignore
-
-# ** info: python imports
 import sys
 import json
 import logging
 import traceback
 from types import FrameType
-
-# ** info: types imports
 from types import TracebackType
-
-# ** info: loguru imports
 from loguru import logger
 from typing import Any
 from typing import Dict
 from typing import Self
-
-# ** info: typing imports
 from typing import Union
 from datetime import datetime
-
-# ** info: loguru _recattrs imports
 from loguru._recattrs import RecordException
 from src.sidecard.system.artifacts.env_provider import EnvProvider
-
-# ** info: sidecards.artifacts imports
 from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
 
 __all__: list[str] = ["LoggingProvider"]
 
 
 class LoggingProvider:
-    _env_provider: EnvProvider = EnvProvider()
+    _env_provider: EnvProvider = EnvProvider()  # type: ignore
     _level: str = _env_provider.app_logging_level.value
     _datetime_provider: DatetimeProvider = DatetimeProvider()
 
     _extras: Dict[str, str] = {
-        "rqStartTime": _datetime_provider.get_current_time(),
+        "rqStartTime": _datetime_provider.get_current_time(),  # type: ignore
         "internalId": "397d4343-2855-4c92-b64b-58ee82006e0b",
         "externalId": "97c3cb45-453f-4bd0-b0d5-d06cd568be27",
         "version": "v1.0.0",
@@ -63,7 +49,7 @@ class LoggingProvider:
         # ** info: loguru configs
         loguru_configs: dict = {"sink": cls._pretty_log_sink, "serialize": False, "colorize": True, "format": fmt}
 
-        logger.configure(patcher=lambda record: cls._pretty_record_patcher(record), extra=cls._extras, handlers=[loguru_configs])
+        logger.configure(patcher=lambda record: cls._pretty_record_patcher(record), extra=cls._extras, handlers=[loguru_configs])  # type: ignore
 
     @classmethod
     def _pretty_log_sink(cls, message: str) -> None:
@@ -73,17 +59,17 @@ class LoggingProvider:
     @classmethod
     def _pretty_record_patcher(cls, record: logging.LogRecord) -> logging.LogRecord:
         end_time: datetime = cls._datetime_provider.get_current_time()
-        last_log_time: datetime = record["extra"]["lastLogTime"]
-        start_time: datetime = record["extra"]["rqStartTime"]
+        last_log_time: datetime = record["extra"]["lastLogTime"]  # type: ignore
+        start_time: datetime = record["extra"]["rqStartTime"]  # type: ignore
 
         elapsed_since_last_log: int = cls._datetime_provider.get_time_delta_in_ms(start_time=last_log_time, end_time=end_time)
         elapsed_miliseconds: int = cls._datetime_provider.get_time_delta_in_ms(start_time=start_time, end_time=end_time)
 
-        record["extra"]["sinceLastLogMsDif"] = f"{elapsed_since_last_log}ms"
-        record["extra"]["sinceRqStartMsDif"] = f"{elapsed_miliseconds}ms"
+        record["extra"]["sinceLastLogMsDif"] = f"{elapsed_since_last_log}ms"  # type: ignore
+        record["extra"]["sinceRqStartMsDif"] = f"{elapsed_miliseconds}ms"  # type: ignore
 
-        if record["level"].name == "INFO" or record["level"].name == "DEBUG":
-            record["message"] = str(record["message"]).replace("\n", " ")
+        if record["level"].name == "INFO" or record["level"].name == "DEBUG":  # type: ignore
+            record["message"] = str(record["message"]).replace("\n", " ")  # type: ignore
 
         return record
 
@@ -107,11 +93,11 @@ class LoggingProvider:
         # ** info: loguru configs
         loguru_configs: dict = {"sink": cls._structured_log_sink, "serialize": True, "colorize": False, "format": fmt}
 
-        logger.configure(patcher=lambda record: cls._structured_record_patcher(record), extra=cls._extras, handlers=[loguru_configs])
+        logger.configure(patcher=lambda record: cls._structured_record_patcher(record), extra=cls._extras, handlers=[loguru_configs])  # type: ignore
 
     @classmethod
     def _structured_log_sink(cls, message: str) -> None:
-        serialized = cls._custom_serializer(message.record)
+        serialized = cls._custom_serializer(message.record)  # type: ignore
         sys.stdout.write(serialized)
         sys.stdout.write("\n")
         sys.stdout.flush()
@@ -119,14 +105,14 @@ class LoggingProvider:
     @classmethod
     def _structured_record_patcher(cls, record: logging.LogRecord) -> logging.LogRecord:
         end_time: datetime = cls._datetime_provider.get_current_time()
-        last_log_time: datetime = record["extra"]["lastLogTime"]
-        start_time: datetime = record["extra"]["rqStartTime"]
+        last_log_time: datetime = record["extra"]["lastLogTime"]  # type: ignore
+        start_time: datetime = record["extra"]["rqStartTime"]  # type: ignore
 
         elapsed_since_last_log: int = cls._datetime_provider.get_time_delta_in_ms(start_time=last_log_time, end_time=end_time)
         elapsed_miliseconds: int = cls._datetime_provider.get_time_delta_in_ms(start_time=start_time, end_time=end_time)
 
-        record["extra"]["sinceLastLogMsDif"] = elapsed_since_last_log
-        record["extra"]["sinceRqStartMsDif"] = elapsed_miliseconds
+        record["extra"]["sinceLastLogMsDif"] = elapsed_since_last_log  # type: ignore
+        record["extra"]["sinceRqStartMsDif"] = elapsed_miliseconds  # type: ignore
 
         return record
 
@@ -178,7 +164,7 @@ class LoggingProvider:
             depth: int = 2
 
             while frame.f_code.co_filename == logging.__file__:
-                frame = frame.f_back
+                frame = frame.f_back  # type: ignore
                 depth += 1
 
             current_time = self._datetime_provider.get_current_time()

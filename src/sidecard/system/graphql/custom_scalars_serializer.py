@@ -1,7 +1,3 @@
-# !/usr/bin/python3
-# type: ignore
-
-# ** info: ariadne imports
 from ariadne import ScalarType
 
 __all__: list[str] = ["integer_scalar", "float_scalar"]

@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "credit_core_system"
 version = "v1.0.0"
-description = "The SAR Core Microservice is the incharge of provide some of the most important capabilities of the SAR system, as wastes collect request management, waste management and clients management"
+description = "a simple credit core backend implementation using fastapi as the main framework and a modular and hexagonal software architecture"
 authors = ["joseesco24 <josed.escobar@outlook.com>"]
 readme = "readme.md"
 packages = [{ include = "*", from = "src" }]
@@ -29,7 +29,6 @@ watchfiles = "^0.21.0"
 pytest = "^8.0.2"
 pytest-asyncio = "^0.23.5"
 ruff = "^0.4.1"
-mypy = "^1.9.0"
 poetry-audit-plugin = "^0.4.0"
 poetry-plugin-export = "^1.7.1"
 

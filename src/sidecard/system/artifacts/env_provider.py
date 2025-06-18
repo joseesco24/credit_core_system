@@ -1,44 +1,38 @@
-# !/usr/bin/python3
-# type: ignore
-
-# ** info: python imports
 from enum import Enum
 from pydantic import Field
 from pydantic import HttpUrl
 from pydantic_settings import BaseSettings
-
-# ** info: pydantic imports
 from pydantic_settings import SettingsConfigDict
 
 __all__: list[str] = ["EnvProvider"]
 
 
 class EnvironmentMode(str, Enum):
-    development: str = "development"
-    production: str = "production"
+    development: str = "development"  # type: ignore
+    production: str = "production"  # type: ignore
 
 
 class LoggingLevel(str, Enum):
-    debug: str = "DEBUG"
-    info: str = "INFO"
-    warning: str = "WARNING"
-    error: str = "ERROR"
-    critical: str = "CRITICAL"
+    debug: str = "DEBUG"  # type: ignore
+    info: str = "INFO"  # type: ignore
+    warning: str = "WARNING"  # type: ignore
+    error: str = "ERROR"  # type: ignore
+    critical: str = "CRITICAL"  # type: ignore
 
 
 class LoggingMode(str, Enum):
-    structured: str = "structured"
-    pretty: str = "pretty"
+    structured: str = "structured"  # type: ignore
+    pretty: str = "pretty"  # type: ignore
 
 
 class SupportedLocales(str, Enum):
-    colombia: str = "es_CO.UTF-8"
-    usa: str = "en_US.UTF-8"
+    colombia: str = "es_CO.UTF-8"  # type: ignore
+    usa: str = "en_US.UTF-8"  # type: ignore
 
 
 class SupportedTimeZones(str, Enum):
-    colombia: str = "America/Bogota"
-    usa: str = "America/New_York"
+    colombia: str = "America/Bogota"  # type: ignore
+    usa: str = "America/New_York"  # type: ignore
 
 
 class EnvProvider(BaseSettings):

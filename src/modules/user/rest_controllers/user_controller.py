@@ -1,15 +1,13 @@
-# !/usr/bin/python3
-
 from fastapi import Body
 from fastapi import APIRouter
 from fastapi import status
-from modules.user.services.user_service import UserService  # type: ignore
-from src.sidecard.system.artifacts.path_provider import PathProvider  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserCreationRequestDto  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto  # type: ignore
+from modules.user.services.user_service import UserService
+from src.sidecard.system.artifacts.path_provider import PathProvider
+from modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto
+from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
+from modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto
+from modules.user.rest_controllers_dtos.user_dtos import UserCreationRequestDto
+from modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto
 
 __all__: list[str] = ["user_controller"]
 _path_provider: PathProvider = PathProvider()

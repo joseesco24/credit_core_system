@@ -4,6 +4,8 @@
 
 ## Description
 
+a simple credit core backend implementation using fastapi as the main framework and a modular and hexagonal software architecture
+
 ## Context
 
 ## Architecture

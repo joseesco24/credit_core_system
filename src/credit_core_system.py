@@ -1,5 +1,3 @@
-# !/usr/bin/python3
-
 import sys
 from os import path
 from os.path import join
@@ -27,14 +25,14 @@ from starlette.routing import Route
 from starlette.routing import BaseRoute
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
-from src.sidecard.system.artifacts.env_provider import EnvProvider  # type: ignore
-from src.sidecard.system.artifacts.path_provider import PathProvider  # type: ignore
-from src.sidecard.system.artifacts.logging_provider import LoggingProvider  # type: ignore
+from src.sidecard.system.artifacts.env_provider import EnvProvider
+from src.sidecard.system.artifacts.path_provider import PathProvider
+from src.sidecard.system.artifacts.logging_provider import LoggingProvider
 from src.modules.user.rest_controllers.user_controller import user_controller
-from src.modules.user.graphql_controllers.user_controller import user_gpl_controller  # type: ignore
-from src.sidecard.system.middlewares.error_handler_middleware import ErrorHandlerMiddleware  # type: ignore
+from src.modules.user.graphql_controllers.user_controller import user_gpl_controller
+from src.sidecard.system.middlewares.error_handler_middleware import ErrorHandlerMiddleware
 from src.modules.heart_beat.rest_controllers.heart_beat_controller import heart_beat_controller
-from src.sidecard.system.middlewares.logger_contextualizer_middleware import LoggerContextualizerMiddleware  # type: ignore
+from src.sidecard.system.middlewares.logger_contextualizer_middleware import LoggerContextualizerMiddleware
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: building needed artifacts

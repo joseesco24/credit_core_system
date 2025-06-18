@@ -1,5 +1,3 @@
-# !/usr/bin/python3
-
 from typing import Optional
 from datetime import datetime
 from pydantic import Field

@@ -1,6 +1,3 @@
-# !/usr/bin/python3
-# type: ignore
-
 from typing import Any
 from ariadne import QueryType
 from ariadne import load_schema_from_path
@@ -10,12 +7,12 @@ from pathlib import Path
 from ariadne.asgi import GraphQL
 from starlette.routing import Route
 from ariadne.validation import cost_validator
-from modules.user.services.user_service import UserService  # type: ignore
+from modules.user.services.user_service import UserService
 from src.sidecard.system.artifacts.env_provider import EnvProvider
 from src.sidecard.system.artifacts.path_provider import PathProvider
 from src.sidecard.system.graphql.error_formatter import error_formatter
-from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto  # type: ignore  # type: ignore
+from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
+from modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto
 from src.sidecard.system.graphql.custom_scalars_serializer import float_scalar
 from src.sidecard.system.graphql.custom_scalars_serializer import integer_scalar
 
@@ -26,7 +23,7 @@ _user_service: UserService = UserService()
 
 # ** info: building sidecards
 _path_provider: PathProvider = PathProvider()
-_env_provider: EnvProvider = EnvProvider()
+_env_provider: EnvProvider = EnvProvider()  # type: ignore
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: assembling schema literal
@@ -47,7 +44,7 @@ query: QueryType = QueryType()
 async def get_user_by_email(*_: Any, emailAddress: str) -> UserDataResponseDto:
     user_by_email_request: UserByEmailRequestDto = UserByEmailRequestDto(emailAddress=emailAddress)
     user_full_data_reponse: UserDataResponseDto = await _user_service.get_user_by_email_orchestator(user_by_email_request)
-    return user_full_data_reponse.model_dump(by_alias=True)
+    return user_full_data_reponse.model_dump(by_alias=True)  # type: ignore
 
 
 # ---------------------------------------------------------------------------------------------------------------------

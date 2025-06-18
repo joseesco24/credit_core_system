@@ -1,18 +1,16 @@
-# !/usr/bin/python3
-
 import logging
 from typing import Self
 from fastapi import HTTPException
 from fastapi import status
-from modules.user.mappers.user_mappers import UserMappers  # type: ignore
-from modules.user.mysql_entites.user_entity import UserEntitie  # type: ignore
-from src.sidecard.system.artifacts.i8n_provider import I8nProvider  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserCreationRequestDto  # type: ignore
-from modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto  # type: ignore
-from modules.user.mysql_repositories.user_repositorie import UserRepositorie  # type: ignore
+from modules.user.mappers.user_mappers import UserMappers
+from modules.user.mysql_entites.user_entity import UserEntitie
+from src.sidecard.system.artifacts.i8n_provider import I8nProvider
+from modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto
+from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
+from modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto
+from modules.user.rest_controllers_dtos.user_dtos import UserCreationRequestDto
+from modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto
+from modules.user.mysql_repositories.user_repositorie import UserRepositorie
 
 __all__: list[str] = ["UserService"]
 

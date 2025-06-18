@@ -1,24 +1,12 @@
-# !/usr/bin/python3
-# type: ignore
-
-# ** info: python imports
 import logging
 import contextvars
 from typing import Dict
-
-# ** info: typing imports
 from typing import Self
 from typing import Callable
 from fastapi import status
-
-# ** info: fastapi imports
 from fastapi.responses import JSONResponse
 from starlette.requests import Request
-
-# ** info: starlette imports
 from starlette.responses import StreamingResponse
-
-# ** info: sidecards.system.middlewares.inheritables imports
 from src.sidecard.system.middlewares.base_middleware import BaseMiddleware
 
 __all__: list[str] = ["ErrorHandlerMiddleware"]
@@ -37,4 +25,4 @@ class ErrorHandlerMiddleware(BaseMiddleware):
             return response
         except Exception:
             logging.exception(f"an error has occurred while processing the request {internal_id}")
-            return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content={r"detail": r"Internal Server Error"})
+            return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content={r"detail": r"Internal Server Error"})  # type: ignore

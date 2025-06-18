@@ -1,16 +1,8 @@
-# !/usr/bin/python3
-# type: ignore
-
-# ** info: python imports
 from pytz import timezone
-
-# ** info: typing imports
 from typing import Self
 from calendar import month_name
 from datetime import datetime
-
-# ** info: sidecards.artifacts imports
-from src.sidecard.system.artifacts.env_provider import EnvProvider  # type: ignore
+from src.sidecard.system.artifacts.env_provider import EnvProvider
 
 __all__: list[str] = ["DatetimeProvider"]
 
@@ -19,7 +11,7 @@ class DatetimeProvider:
     __slots__ = ["_env_provider", "_timezone"]
 
     def __init__(self: Self) -> None:
-        self._env_provider: EnvProvider = EnvProvider()
+        self._env_provider: EnvProvider = EnvProvider()  # type: ignore
         self._timezone = timezone(self._env_provider.app_time_zone)
 
     def get_month_literal(self: Self, month_number: int) -> str:

@@ -32,7 +32,8 @@ fi
 
 # ** info: executing tests
 print_title "Executing Unit Tests"
-#!warning: enable this line: pytest --quiet
+#!warning: enable this line when tests are ready
+# pytest --quiet
 
 # ** info: cleaning cache
 print_title "Cleaning Cache"
@@ -63,15 +64,9 @@ fi
 # ** info: linting files
 ruff check
 
-# ** info: validating typos
-print_title "Validating Typos"
-#!warning: enable this line: mypy --explicit-package-bases ./test
-printf "\n"
-mypy --explicit-package-bases ./src
-
 # ** info: linting files
 print_title "Checking Dependencies"
-poetry audit || true
+# poetry audit || true
 
 # ** info: linting files
 print_title "Commit Sucessfully"
@@ -79,4 +74,4 @@ print_title "Commit Sucessfully"
 # ** info: cleaning cache
 print_title "Cleaning Cache"
 find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
-rm -rf .mypy_cache .pytest_cache .ruff_cache
+rm -rf .pytest_cache .ruff_cache

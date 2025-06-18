@@ -1,9 +1,7 @@
-# !/usr/bin/python3
-
 from fastapi import Response
 from fastapi import APIRouter
 from fastapi import status
-from src.sidecard.system.artifacts.path_provider import PathProvider  # type: ignore
+from src.sidecard.system.artifacts.path_provider import PathProvider
 
 __all__: list[str] = ["heart_beat_controller"]
 _path_provider: PathProvider = PathProvider()

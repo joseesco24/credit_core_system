@@ -1,6 +1,3 @@
-# !/usr/bin/python3
-# type: ignore
-
 from datetime import datetime
 from sqlmodel import Field
 from sqlmodel import SQLModel
@@ -8,7 +5,7 @@ from sqlmodel import SQLModel
 
 class UserEntitie(SQLModel, table=True):
     __table_args__ = {"extend_existing": True}
-    __tablename__ = "user"
+    __tablename__ = "user"  # type: ignore
 
     id: int = Field(nullable=False, primary_key=True)
     document: int = Field(nullable=False)

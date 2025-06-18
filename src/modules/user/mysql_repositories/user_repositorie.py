@@ -1,6 +1,3 @@
-# !/usr/bin/python3
-# type: ignore
-
 import logging
 from typing import Any
 from typing import Self
@@ -21,7 +18,7 @@ user_provider_cache: TTLCache = TTLCache(ttl=240, maxsize=20)
 
 class UserRepositorie:
     def __init__(self: Self) -> None:
-        self._env_provider: EnvProvider = EnvProvider()
+        self._env_provider: EnvProvider = EnvProvider()  # type: ignore
         self._uuid_provider: UuidProvider = UuidProvider()
         self._datetime_provider: DatetimeProvider = DatetimeProvider()
         self._session_manager: MySQLManager = MySQLManager(
@@ -41,7 +38,7 @@ class UserRepositorie:
     def create_user(self: Self, email: str, name: str, last_name: str, document: int) -> UserEntitie:
         logging.debug("creating new user with basic info")
         session: Session = self._session_manager.obtain_session()
-        new_user: UserEntitie = UserEntitie(email=email, name=name, last_name=last_name, document=document)
+        new_user: UserEntitie = UserEntitie(email=email, name=name, last_name=last_name, document=document)  # type: ignore
         session.add(new_user)
         session.commit()
         session.refresh(new_user)

@@ -1,25 +1,11 @@
-# !/usr/bin/python3
-# type: ignore
-
-# ** info: python imports
 import logging
-
-# ** info: loguru imports
 from loguru import logger
 from typing import Self
-
-# ** info: typing imports
 from typing import Callable
 from starlette.requests import Request
-
-# ** info: starlette imports
 from starlette.responses import StreamingResponse
 from src.sidecard.system.artifacts.uuid_provider import UuidProvider
-
-# ** info: sidecards.system.artifacts imports
 from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
-
-# ** info: sidecards.system.middlewares.inheritables imports
 from src.sidecard.system.middlewares.base_middleware import BaseMiddleware
 
 __all__: list[str] = ["LoggerContextualizerMiddleware"]
