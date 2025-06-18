@@ -16,8 +16,8 @@ services:
       DATABASE_LOGS: "true"
       DATABASE_NAME: "credit_system_db"
       DATABASE_PORT: 3306
-      SAR_BRMS_BASE_URL: "http://sar_brms:8080"
-      SAR_WAREHOUSE_MS_BASE_URL: "https://sar_java_ms:8090"
+      IDENTITY_VALIDATION_MS_BASE_URL: "https://www.random.org"
+      SCORING_MS_BASE_URL: "https://www.random.org"
     networks:
       - credit_core_system_network
     ports:
