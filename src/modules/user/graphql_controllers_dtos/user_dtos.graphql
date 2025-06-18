@@ -1,0 +1,17 @@
+scalar Integer
+scalar Float
+
+type Query {
+	getUserByEmail(emailAddress: String): User!
+}
+
+type User {
+	userId: ID!
+	documentNumber: Integer!
+	emailAddress: String!
+	firstName: String!
+	lastName: String!
+	isValidated: Boolean
+	createdAt: String!
+	updatedAt: String!
+}

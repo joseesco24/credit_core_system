@@ -14,7 +14,7 @@ from modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDt
 __all__: list[str] = ["user_controller"]
 _path_provider: PathProvider = PathProvider()
 user_controller: APIRouter = APIRouter(prefix=_path_provider.build_posix_path("user"), tags=["Users"])
-_user_core: UserService = UserService()
+_user_service: UserService = UserService()
 
 
 @user_controller.post(
@@ -25,7 +25,7 @@ _user_core: UserService = UserService()
     status_code=status.HTTP_200_OK,
 )
 async def create_user(user_creation_request: UserCreationRequestDto = Body(...)) -> UserDataResponseDto:
-    user_creation_response: UserDataResponseDto = await _user_core.create_user_orchestator(user_creation_request)
+    user_creation_response: UserDataResponseDto = await _user_service.create_user_orchestator(user_creation_request)
     return user_creation_response
 
 
@@ -37,7 +37,7 @@ async def create_user(user_creation_request: UserCreationRequestDto = Body(...))
     status_code=status.HTTP_200_OK,
 )
 async def get_user_by_email(user_by_email_request: UserByEmailRequestDto = Body(...)) -> UserDataResponseDto:
-    user_by_email_response: UserDataResponseDto = await _user_core.get_user_by_email_orchestator(user_by_email_request)
+    user_by_email_response: UserDataResponseDto = await _user_service.get_user_by_email_orchestator(user_by_email_request)
     return user_by_email_response
 
 
@@ -49,7 +49,7 @@ async def get_user_by_email(user_by_email_request: UserByEmailRequestDto = Body(
     status_code=status.HTTP_200_OK,
 )
 async def get_user_by_id(user_by_id_request: UserByIdRequestDto = Body(...)) -> UserDataResponseDto:
-    user_by_email_response: UserDataResponseDto = await _user_core.get_user_by_id_orchestator(user_by_id_request)
+    user_by_email_response: UserDataResponseDto = await _user_service.get_user_by_id_orchestator(user_by_id_request)
     return user_by_email_response
 
 
@@ -61,5 +61,5 @@ async def get_user_by_id(user_by_id_request: UserByIdRequestDto = Body(...)) -> 
     status_code=status.HTTP_200_OK,
 )
 async def get_user_by_document(user_by_document_request: UserByDocumentRequestDto = Body(...)) -> UserDataResponseDto:
-    user_by_email_response: UserDataResponseDto = await _user_core.get_user_by_document_orchestator(user_by_document_request)
+    user_by_email_response: UserDataResponseDto = await _user_service.get_user_by_document_orchestator(user_by_document_request)
     return user_by_email_response

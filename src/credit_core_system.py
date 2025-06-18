@@ -1,15 +1,7 @@
 # !/usr/bin/python3
 
-# ** info: python imports
-import gc
 import sys
-import logging
 from os import path
-from typing import Any
-from typing import Dict
-
-# ** info: typing imports
-from typing import List
 from os.path import join
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -22,24 +14,27 @@ sys.path.append(join(path.dirname(path.realpath(__file__)), "..", "."))
 # ** info: continuing with the app setup
 # ---------------------------------------------------------------------------------------------------------------------
 
-# ** info: uvicorn imports
+import gc
+import logging
 import uvicorn
+from typing import Any
+from typing import Dict
+from typing import List
 from fastapi import FastAPI
 from fastapi import APIRouter
 from starlette.routing import Mount
 from starlette.routing import Route
 from starlette.routing import BaseRoute
-
-# ** info: fastapi imports
 from fastapi.middleware.cors import CORSMiddleware
-
-# ** info: starlette imports
 from starlette.middleware.base import BaseHTTPMiddleware
 from src.sidecard.system.artifacts.env_provider import EnvProvider  # type: ignore
 from src.sidecard.system.artifacts.path_provider import PathProvider  # type: ignore
-
-# ** info: sidecards.artifacts imports
 from src.sidecard.system.artifacts.logging_provider import LoggingProvider  # type: ignore
+from src.modules.user.rest_controllers.user_controller import user_controller
+from src.modules.user.graphql_controllers.user_controller import user_gpl_controller  # type: ignore
+from src.sidecard.system.middlewares.error_handler_middleware import ErrorHandlerMiddleware  # type: ignore
+from src.modules.heart_beat.rest_controllers.heart_beat_controller import heart_beat_controller
+from src.sidecard.system.middlewares.logger_contextualizer_middleware import LoggerContextualizerMiddleware  # type: ignore
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: building needed artifacts
@@ -47,15 +42,6 @@ from src.sidecard.system.artifacts.logging_provider import LoggingProvider  # ty
 
 path_provider: PathProvider = PathProvider()
 env_provider: EnvProvider = EnvProvider()  # type: ignore
-
-# ---------------------------------------------------------------------------------------------------------------------
-# ** info: continuing with the app setup
-# ---------------------------------------------------------------------------------------------------------------------
-
-from src.modules.user.rest_controllers.user_controller import user_controller
-from src.sidecard.system.middlewares.error_handler_middleware import ErrorHandlerMiddleware  # type: ignore
-from src.modules.heart_beat.rest_controllers.heart_beat_controller import heart_beat_controller
-from src.sidecard.system.middlewares.logger_contextualizer_middleware import LoggerContextualizerMiddleware  # type: ignore
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: setting up global app logging
@@ -78,7 +64,7 @@ routes: List[Route] = []
 # ** info: setting graphql based routers
 # ---------------------------------------------------------------------------------------------------------------------
 
-# routes.append(user_gpl_router)
+routes.append(user_gpl_controller)
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: mounting graphql based routers
@@ -91,9 +77,9 @@ graphql_routers: List[BaseRoute] = [Mount(path=path_provider.build_posix_path("g
 # ---------------------------------------------------------------------------------------------------------------------
 
 metadata: Dict[str, Any] = {
-    "description": "The SAR Core Microservice is the incharge of provide some of the most important capabilities of the SAR system, as wastes collect request management, waste management and clients management",  # noqa # fmt: skip
-    "summary": "Service incharge of managing wastes, collect request, and system parameters.",
-    "title": "Sar Python Microservice",
+    "description": "",  # noqa # fmt: skip
+    "summary": "",
+    "title": "Credit Core System",
     "version": "v1.0.0",
 }
 
