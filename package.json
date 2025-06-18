@@ -1,0 +1,51 @@
+{
+	"name": "credit_core_system",
+	"version": "v1.0.0",
+	"description": "",
+	"author": {
+		"email": "josed.escobar@outlook.com",
+		"name": "joseesco24"
+	},
+	"readme": "readme.md",
+	"scripts": {
+		"export-dependencies": "poetry export --without-hashes --only dev --format=requirements.txt > ./dependencies/develop/requirements.txt && poetry export --without-hashes --format=requirements.txt > ./dependencies/production/requirements.txt",
+		"lint": "ruff check --fix && printf \"\n\" && mypy --explicit-package-bases ./src && printf \"\n\" && mypy --explicit-package-bases ./test",
+		"clean-cache": "find . | grep -E \"(/__pycache__$|\\.pyc$|\\.pyo$)\" | xargs rm -rf && rm -rf .mypy_cache .pytest_cache .ruff_cache",
+		"docker-image-build": "docker build --tag ghcr.io/joseesco24/credit_core_system:v1.0.0 .",
+		"docker-image-push": "docker push ghcr.io/joseesco24/credit_core_system:v1.0.0",
+		"docker-stop": "docker compose -f ./docker-compose.yaml down",
+		"docker-start": "docker compose -f ./docker-compose.yaml up",
+		"docker-db-image-build": "docker compose -f docker_compose/mysql_database/image.build.yaml build",
+		"docker-db-image-push": "docker push ghcr.io/joseesco24/credit_core_system_db_mysql --all-tags",
+		"docker-db-stop": "docker compose -f docker_compose/mysql_database/deploy.full.yaml down",
+		"docker-db-start": "docker compose -f docker_compose/mysql_database/deploy.full.yaml up",
+		"format": "ruff format && printf \"\n\" && prettier \"./src/**/*.{json,graphql}\" --write",
+		"start": "cp -f .env.example .env && python src/credit_core_system.py",
+		"commitmsg": "bash ./.husky/commit-msg.sh",
+		"precommit": "bash ./.husky/pre-commit.sh",
+		"postinstall": "npx husky install",
+		"test": "pytest --verbose"
+	},
+	"prettier": {
+		"trailingComma": "es5",
+		"useTabs": true,
+		"semi": false,
+		"singleQuote": false,
+		"proseWrap": "preserve",
+		"quoteProps": "consistent",
+		"bracketSpacing": false,
+		"bracketSameLine": false,
+		"arrowParens": "always",
+		"insertPragma": false,
+		"endOfLine": "lf",
+		"printWidth": 180,
+		"rangeStart": 0
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.2",
+		"@commitlint/cli": "^19.3.0",
+		"@commitlint/config-conventional": "^19.2.2",
+		"husky": "^9.0.11",
+		"prettier": "^3.3.2"
+	}
+}

@@ -1,0 +1,29 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "python.analysis.typeCheckingMode": "basic",
+    "zowe.settings.version": 2
+  },
+  "launch": {
+    "version": "v1.0.0",
+    "configurations": [
+      {
+        "name": "credit_core_system",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "src/credit_core_system.py",
+        "console": "integratedTerminal",
+        "justMyCode": true,
+        "jinja": true,
+        "env": {
+          "APP_ENVIRONMENT_MODE": "production",
+          "APP_LOGGING_MODE": "pretty"
+        }
+      }
+    ]
+  }
+}

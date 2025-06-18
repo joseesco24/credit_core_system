@@ -1,0 +1,51 @@
+services:
+  credit_core_system_ms:
+    container_name: credit_core_system_ms
+    image: ghcr.io/joseesco24/credit_core_system_ms:v1.0.0
+    environment:
+      APP_ENVIRONMENT_MODE: "production"
+      APP_LOGGING_MODE: "structured"
+      APP_LOGGING_LEVEL: "DEBUG"
+      APP_SERVER_PORT: 10048
+      APP_SWAGGER_DOCS: "true"
+      APP_POSIX_LOCALE: "es_CO.UTF-8"
+      APP_TIME_ZONE: "America/Bogota"
+      DATABASE_PASSWORD: "credit_system_password"
+      DATABASE_HOST: "credit_core_system_db_mysql"
+      DATABASE_USER: "credit_system_user"
+      DATABASE_LOGS: "true"
+      DATABASE_NAME: "credit_system_db"
+      DATABASE_PORT: 3306
+      SAR_BRMS_BASE_URL: "http://sar_brms:8080"
+      SAR_WAREHOUSE_MS_BASE_URL: "https://sar_java_ms:8090"
+    networks:
+      - credit_core_system_network
+    ports:
+      - target: 10048
+        published: 10048
+        protocol: tcp
+    depends_on:
+      - sar_bd_mysql
+      - sar_brms
+  credit_core_system_db_mysql:
+    container_name: credit_core_system_db_mysql
+    image: ghcr.io/joseesco24/credit_core_system_db_mysql:v1.1.3
+    networks:
+      - credit_core_system_network
+    ports:
+      - target: 3306
+        published: 3308
+        protocol: tcp
+    volumes:
+      - type: volume
+        source: credit_core_system_db_mysql_disc
+        target: /var/lib/mysql
+
+networks:
+  credit_core_system_network:
+    name: credit_core_system_network
+    external: false
+    driver: bridge
+
+volumes:
+  credit_core_system_db_mysql_disc:

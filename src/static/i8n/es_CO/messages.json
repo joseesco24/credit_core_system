@@ -1,0 +1,12 @@
+{
+	"waste": {
+		"EM001": "el estado de proceso {{ process_status }} no es válido"
+	},
+	"user": {
+		"EM001": "el correo {{ email }} ya fué registrado en el sistema",
+		"EM002": "el usuario con el correo {{ email }} no fue encontrado",
+		"EM003": "el document {{ document }} ya fué registrado en el sistema",
+		"EM004": "el usuario con el document {{ document }} no fue encontrado",
+		"EM005": "el usuario con el id {{ id }} no fue encontrado"
+	}
+}

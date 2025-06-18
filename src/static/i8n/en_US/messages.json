@@ -1,0 +1,12 @@
+{
+	"waste": {
+		"EM001": "process status {{ process_status }} is not valid"
+	},
+	"user": {
+		"EM001": "the email {{ email }} already exist on the system",
+		"EM002": "user with email {{ email }} not found",
+		"EM003": "the document {{ document }} already exist on the system",
+		"EM004": "user with document {{ document }} not found",
+		"EM005": "user with {{ id }} not found"
+	}
+}

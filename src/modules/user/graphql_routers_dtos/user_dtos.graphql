@@ -1,0 +1,18 @@
+# ** info: this schema works as a contract between the app and the client
+
+scalar Integer
+scalar Float
+
+type Query {
+	userByEmail(email: String): User!
+}
+
+type User {
+	id: ID!
+	active: Boolean!
+	email: String!
+	name: String!
+	lastName: String!
+	create: String!
+	update: String!
+}

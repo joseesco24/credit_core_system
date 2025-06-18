@@ -1,0 +1,6 @@
+services:
+  credit_core_system_db_mysql:
+    image: ghcr.io/joseesco24/credit_core_system_db_mysql:v1.1.3
+    build:
+      dockerfile: ./docker/mysql_database/Dockerfile
+      context: ../../.

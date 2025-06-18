@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "e31f1db5-d197-4ed2-b16f-5f18cdbb0e85",
+		"name": "credit_core_system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8443281"
+	},
+	"item": [
+		{
+			"name": "rest",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "search-by-document",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"documentNumber\": 1074315264\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/user/search-by-document",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"rest",
+										"user",
+										"search-by-document"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search-by-email",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"emailAddress\": \"pedro.perez@correo.com.co\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/user/search-by-email",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"rest",
+										"user",
+										"search-by-email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search-by-id",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/user/search-by-id",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"rest",
+										"user",
+										"search-by-id"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"emailAddress\": \"pedro.perez@correo.com.co\",\n    \"lastName\": \"Perez Sarmiento\",\n    \"firstName\": \"Pedro Alejandro\",\n    \"documentNumber\": 1074315264\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/user/create",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"rest",
+										"user",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "heart-beat",
+					"item": [
+						{
+							"name": "root",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{HOST}}/rest/heart-beat/",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"rest",
+										"heart-beat",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "{{LOCAL_HOST}}",
+			"type": "string"
+		},
+		{
+			"key": "LOCAL_HOST",
+			"value": "localhost:10048",
+			"type": "string"
+		},
+		{
+			"key": "CLOUD_HOST",
+			"value": "http://ec2-3-14-15-101.us-east-2.compute.amazonaws.com:10048",
+			"type": "string"
+		},
+		{
+			"key": "K3S_HOST",
+			"value": "10.43.9.210:10048",
+			"type": "string"
+		}
+	]
+}
