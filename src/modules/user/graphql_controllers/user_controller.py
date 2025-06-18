@@ -1,4 +1,6 @@
 from typing import Any
+from typing import List
+from typing import Union
 from ariadne import QueryType
 from ariadne import load_schema_from_path
 from ariadne import make_executable_schema
@@ -12,7 +14,6 @@ from src.sidecard.system.artifacts.env_provider import EnvProvider
 from src.sidecard.system.artifacts.path_provider import PathProvider
 from src.sidecard.system.graphql.error_formatter import error_formatter
 from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
-from modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto
 from src.sidecard.system.graphql.custom_scalars_serializer import float_scalar
 from src.sidecard.system.graphql.custom_scalars_serializer import integer_scalar
 
@@ -40,11 +41,20 @@ schema_literal: str = load_schema_from_path(path=str(schema_path))
 query: QueryType = QueryType()
 
 
-@query.field("getUserByEmail")
-async def get_user_by_email(*_: Any, emailAddress: str) -> UserDataResponseDto:
-    user_by_email_request: UserByEmailRequestDto = UserByEmailRequestDto(emailAddress=emailAddress)
-    user_full_data_reponse: UserDataResponseDto = await _user_service.get_user_by_email_orchestator(user_by_email_request)
-    return user_full_data_reponse.model_dump(by_alias=True)  # type: ignore
+@query.field("getUserByFilters")
+async def get_user_by_filters(
+    *_: Any,
+    userId: Union[int, None] = None,
+    documentNumber: Union[int, None] = None,
+    emailAddress: Union[str, None] = None,
+    firstName: Union[str, None] = None,
+    lastName: Union[str, None] = None,
+    isValidated: Union[bool, None] = None,
+) -> List[UserDataResponseDto]:
+    user_full_data_reponse: List[UserDataResponseDto] = await _user_service.get_user_by_filters_orchestator(
+        id=userId, document=documentNumber, email=emailAddress, name=firstName, last_name=lastName, is_validated=isValidated
+    )
+    return user_full_data_reponse
 
 
 # ---------------------------------------------------------------------------------------------------------------------

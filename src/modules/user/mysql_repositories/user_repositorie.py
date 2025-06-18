@@ -1,8 +1,11 @@
 import logging
 from typing import Any
+from typing import List
 from typing import Self
+from typing import Union
 from stamina import retry
 from sqlmodel import Session
+from sqlmodel import col
 from sqlmodel import select
 from cachetools import TTLCache
 from cachetools import cached
@@ -45,6 +48,36 @@ class UserRepositorie:
         self._clear_cache()
         logging.debug("new user with basic info created")
         return new_user
+
+    @cached(user_provider_cache)
+    @retry(on=Exception, attempts=4, wait_initial=0.08, wait_exp_base=2)
+    def search_user_by_filters(
+        self: Self,
+        id: Union[int, None] = None,
+        document: Union[int, None] = None,
+        email: Union[str, None] = None,
+        name: Union[str, None] = None,
+        last_name: Union[str, None] = None,
+        is_validated: Union[bool, None] = None,
+    ) -> List[UserEntitie]:
+        logging.debug("searching user by filters")
+        session: Session = self._session_manager.obtain_session()
+        query: Any = select(UserEntitie)
+        if id is not None:
+            query = query.where(UserEntitie.id == id)
+        if document is not None:
+            query = query.where(UserEntitie.document == document)
+        if email is not None:
+            query = query.where(col(UserEntitie.email).contains(email))
+        if name is not None:
+            query = query.where(col(UserEntitie.name).contains(name))
+        if last_name is not None:
+            query = query.where(col(UserEntitie.last_name).contains(last_name))
+        if is_validated is not None:
+            query = query.where(UserEntitie.is_validated == is_validated)
+        query_result: List[UserEntitie] = session.exec(statement=query).all()
+        logging.debug("searching user by filters ended")
+        return query_result
 
     @cached(user_provider_cache)
     @retry(on=Exception, attempts=4, wait_initial=0.08, wait_exp_base=2)

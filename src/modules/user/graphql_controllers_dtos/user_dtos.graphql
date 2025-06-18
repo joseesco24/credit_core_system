@@ -2,7 +2,7 @@ scalar Integer
 scalar Float
 
 type Query {
-	getUserByEmail(emailAddress: String): User!
+	getUserByFilters(userId: ID, documentNumber: Integer, emailAddress: String, firstName: String, lastName: String, isValidated: Boolean): [User!]!
 }
 
 type User {

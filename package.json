@@ -20,7 +20,7 @@
 		"docker-db-start": "docker compose -f docker_compose/mysql_database/deploy.full.yaml up",
 		"format": "ruff format && printf \"\n\" && prettier \"./src/**/*.{json,graphql}\" --write",
 		"start": "cp -f .env.example .env && python src/credit_core_system.py",
-		"overwrite-lock-files": "npm install --lock-file",
+		"overwrite-lock-files": "npm install --lock-file-only && poetry lock",
 		"commitmsg": "bash ./.husky/commit-msg.sh",
 		"precommit": "bash ./.husky/pre-commit.sh",
 		"postinstall": "npx husky install",

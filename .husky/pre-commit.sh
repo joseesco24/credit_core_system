@@ -66,7 +66,7 @@ ruff check
 
 # ** info: linting files
 print_title "Checking Dependencies"
-# poetry audit || true
+poetry audit || true
 
 # ** info: linting files
 print_title "Commit Sucessfully"

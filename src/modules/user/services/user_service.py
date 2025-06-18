@@ -1,9 +1,12 @@
 import logging
+from typing import List
 from typing import Self
+from typing import Union
 from fastapi import HTTPException
 from fastapi import status
 from modules.user.mappers.user_mappers import UserMappers
 from modules.user.mysql_entites.user_entity import UserEntitie
+from sidecard.system.helpers.singleton_helper import Singleton
 from src.sidecard.system.artifacts.i8n_provider import I8nProvider
 from modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto
 from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
@@ -15,7 +18,7 @@ from modules.user.mysql_repositories.user_repositorie import UserRepositorie
 __all__: list[str] = ["UserService"]
 
 
-class UserService:
+class UserService(metaclass=Singleton):
     __slots__ = ["_user_repositorie", "_i8n"]
 
     def __init__(self: Self):
@@ -28,6 +31,22 @@ class UserService:
         new_user_data: UserEntitie = self._create_new_user(user_creation_request=user_creation_request)
         logging.debug("ending create_user_orchestator")
         return UserMappers.user_entitie_2_user_data_response_dto(user_entite=new_user_data)
+
+    async def get_user_by_filters_orchestator(
+        self: Self,
+        id: Union[int, None] = None,
+        document: Union[int, None] = None,
+        email: Union[str, None] = None,
+        name: Union[str, None] = None,
+        last_name: Union[str, None] = None,
+        is_validated: Union[bool, None] = None,
+    ) -> List[UserDataResponseDto]:
+        logging.debug("starting get_user_by_filters_orchestator")
+        users_data: List[UserEntitie] = self._user_repositorie.search_user_by_filters(
+            id=id, document=document, email=email, name=name, last_name=last_name, is_validated=is_validated
+        )
+        logging.debug("ending get_user_by_filters_orchestator")
+        return list(map(lambda user_entite: UserMappers.user_entitie_2_user_data_response_dto(user_entite).model_dump(by_alias=True), users_data))  # type: ignore
 
     async def get_user_by_email_orchestator(self: Self, user_by_email_request: UserByEmailRequestDto) -> UserDataResponseDto:
         logging.debug("starting get_user_by_email_orchestator")

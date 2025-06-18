@@ -75,8 +75,7 @@ graphql_routers: List[BaseRoute] = [Mount(path=path_provider.build_posix_path("g
 # ---------------------------------------------------------------------------------------------------------------------
 
 metadata: Dict[str, Any] = {
-    "description": "",  # noqa # fmt: skip
-    "summary": "",
+    "description": "a simple credit core backend implementation using fastapi as the main framework and a modular and hexagonal software architecture",
     "title": "Credit Core System",
     "version": "v1.0.0",
 }
