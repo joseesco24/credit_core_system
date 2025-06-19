@@ -93,7 +93,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"userId\": 3\n}",
+									"raw": "{\n    \"userId\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -142,6 +142,113 @@
 									"path": [
 										"rest",
 										"user",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "account",
+					"item": [
+						{
+							"name": "search-by-user-id",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/account/search-by-user-id",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"rest",
+										"account",
+										"search-by-user-id"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search-by-id",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"accountId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/account/search-by-id",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"rest",
+										"account",
+										"search-by-id"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/account/create",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"rest",
+										"account",
 										"create"
 									]
 								}
@@ -232,6 +339,60 @@
 									"path": [
 										"graphql",
 										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "account",
+					"item": [
+						{
+							"name": "userById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"test response status\", function() {",
+											"    pm.response.to.have.status(200)",
+											"})",
+											"",
+											"pm.test(\"test response time is less than 300s\", function() {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300)",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "782ff804-00e4-4abe-b90b-d720fc468a2f",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query {\n    cuentas: getAccountByFilters (\n        userId: 1\n        ) {\n        idCuenta: accountId\n        idUsuario: userId\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql/account",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"graphql",
+										"account"
 									]
 								}
 							},

@@ -1,6 +1,7 @@
 {
-	"waste": {
-		"EM001": "process status {{ process_status }} is not valid"
+	"account": {
+		"EM001": "account {{ id }} not found",
+		"EM002": "accounts for user {{ user_id }} not found"
 	},
 	"user": {
 		"EM001": "the email {{ email }} already exist on the system",

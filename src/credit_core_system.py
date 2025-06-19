@@ -30,7 +30,9 @@ from src.sidecard.system.artifacts.path_provider import PathProvider
 from src.sidecard.system.artifacts.logging_provider import LoggingProvider
 from src.modules.user.rest_controllers.user_controller import user_controller
 from src.modules.user.graphql_controllers.user_controller import user_gpl_controller
+from src.modules.account.rest_controllers.account_controller import account_controller
 from src.sidecard.system.middlewares.error_handler_middleware import ErrorHandlerMiddleware
+from src.modules.account.graphql_controllers.account_controller import account_gpl_controller
 from src.modules.heart_beat.rest_controllers.heart_beat_controller import heart_beat_controller
 from src.sidecard.system.middlewares.logger_contextualizer_middleware import LoggerContextualizerMiddleware
 
@@ -63,6 +65,7 @@ routes: List[Route] = []
 # ---------------------------------------------------------------------------------------------------------------------
 
 routes.append(user_gpl_controller)
+routes.append(account_gpl_controller)
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: mounting graphql based routers
@@ -100,6 +103,7 @@ rest_router: APIRouter = APIRouter(prefix=path_provider.build_posix_path("rest")
 
 rest_router.include_router(router=heart_beat_controller)
 rest_router.include_router(router=user_controller)
+rest_router.include_router(router=account_controller)
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: mounting rest based routers

@@ -1,0 +1,14 @@
+scalar Integer
+scalar Float
+
+type Query {
+	getAccountByFilters(accountId: ID, userId: Integer): [Account!]!
+}
+
+type Account {
+	accountId: ID!
+	userId: Integer!
+	availableAmount: Float!
+	createdAt: String!
+	updatedAt: String!
+}
