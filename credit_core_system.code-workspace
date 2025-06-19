@@ -9,7 +9,7 @@
     "zowe.settings.version": 2
   },
   "launch": {
-    "version": "v1.0.0",
+    "version": "v1.1.0",
     "configurations": [
       {
         "name": "credit_core_system",

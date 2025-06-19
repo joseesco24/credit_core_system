@@ -1,6 +1,6 @@
 services:
   credit_core_system_ms:
-    image: ghcr.io/joseesco24/credit_core_system_ms:v1.0.0
+    image: ghcr.io/joseesco24/credit_core_system_ms:v1.1.0
     build:
       dockerfile: ./docker/microservice/Dockerfile
       context: ../../.

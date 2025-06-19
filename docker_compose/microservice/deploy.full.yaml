@@ -1,7 +1,7 @@
 services:
   credit_core_system_ms:
     container_name: credit_core_system_ms
-    image: ghcr.io/joseesco24/credit_core_system_ms:v1.0.0
+    image: ghcr.io/joseesco24/credit_core_system_ms:v1.1.0
     environment:
       APP_ENVIRONMENT_MODE: "production"
       APP_LOGGING_MODE: "structured"
@@ -29,7 +29,7 @@ services:
       - sar_brms
   credit_core_system_db_mysql:
     container_name: credit_core_system_db_mysql
-    image: ghcr.io/joseesco24/credit_core_system_db_mysql:v1.0.0
+    image: ghcr.io/joseesco24/credit_core_system_db_mysql:v1.1.0
     networks:
       - credit_core_system_network
     ports:
