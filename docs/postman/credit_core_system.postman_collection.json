@@ -34,14 +34,8 @@
 								},
 								"url": {
 									"raw": "{{HOST}}/rest/user/search-by-document",
-									"host": [
-										"{{HOST}}"
-									],
-									"path": [
-										"rest",
-										"user",
-										"search-by-document"
-									]
+									"host": ["{{HOST}}"],
+									"path": ["rest", "user", "search-by-document"]
 								}
 							},
 							"response": []
@@ -68,14 +62,8 @@
 								},
 								"url": {
 									"raw": "{{HOST}}/rest/user/search-by-email",
-									"host": [
-										"{{HOST}}"
-									],
-									"path": [
-										"rest",
-										"user",
-										"search-by-email"
-									]
+									"host": ["{{HOST}}"],
+									"path": ["rest", "user", "search-by-email"]
 								}
 							},
 							"response": []
@@ -102,14 +90,8 @@
 								},
 								"url": {
 									"raw": "{{HOST}}/rest/user/search-by-id",
-									"host": [
-										"{{HOST}}"
-									],
-									"path": [
-										"rest",
-										"user",
-										"search-by-id"
-									]
+									"host": ["{{HOST}}"],
+									"path": ["rest", "user", "search-by-id"]
 								}
 							},
 							"response": []
@@ -136,14 +118,8 @@
 								},
 								"url": {
 									"raw": "{{HOST}}/rest/user/create",
-									"host": [
-										"{{HOST}}"
-									],
-									"path": [
-										"rest",
-										"user",
-										"create"
-									]
+									"host": ["{{HOST}}"],
+									"path": ["rest", "user", "create"]
 								}
 							},
 							"response": []
@@ -175,14 +151,8 @@
 								},
 								"url": {
 									"raw": "{{HOST}}/rest/account/search-by-user-id",
-									"host": [
-										"{{HOST}}"
-									],
-									"path": [
-										"rest",
-										"account",
-										"search-by-user-id"
-									]
+									"host": ["{{HOST}}"],
+									"path": ["rest", "account", "search-by-user-id"]
 								}
 							},
 							"response": []
@@ -209,14 +179,8 @@
 								},
 								"url": {
 									"raw": "{{HOST}}/rest/account/search-by-id",
-									"host": [
-										"{{HOST}}"
-									],
-									"path": [
-										"rest",
-										"account",
-										"search-by-id"
-									]
+									"host": ["{{HOST}}"],
+									"path": ["rest", "account", "search-by-id"]
 								}
 							},
 							"response": []
@@ -243,14 +207,8 @@
 								},
 								"url": {
 									"raw": "{{HOST}}/rest/account/create",
-									"host": [
-										"{{HOST}}"
-									],
-									"path": [
-										"rest",
-										"account",
-										"create"
-									]
+									"host": ["{{HOST}}"],
+									"path": ["rest", "account", "create"]
 								}
 							},
 							"response": []
@@ -273,14 +231,8 @@
 								],
 								"url": {
 									"raw": "{{HOST}}/rest/heart-beat/",
-									"host": [
-										"{{HOST}}"
-									],
-									"path": [
-										"rest",
-										"heart-beat",
-										""
-									]
+									"host": ["{{HOST}}"],
+									"path": ["rest", "heart-beat", ""]
 								}
 							},
 							"response": []
@@ -333,13 +285,8 @@
 								},
 								"url": {
 									"raw": "{{HOST}}/graphql/user",
-									"host": [
-										"{{HOST}}"
-									],
-									"path": [
-										"graphql",
-										"user"
-									]
+									"host": ["{{HOST}}"],
+									"path": ["graphql", "user"]
 								}
 							},
 							"response": []
@@ -387,13 +334,8 @@
 								},
 								"url": {
 									"raw": "{{HOST}}/graphql/account",
-									"host": [
-										"{{HOST}}"
-									],
-									"path": [
-										"graphql",
-										"account"
-									]
+									"host": ["{{HOST}}"],
+									"path": ["graphql", "account"]
 								}
 							},
 							"response": []
@@ -408,18 +350,14 @@
 			"listen": "prerequest",
 			"script": {
 				"type": "text/javascript",
-				"exec": [
-					""
-				]
+				"exec": [""]
 			}
 		},
 		{
 			"listen": "test",
 			"script": {
 				"type": "text/javascript",
-				"exec": [
-					""
-				]
+				"exec": [""]
 			}
 		}
 	],

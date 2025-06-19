@@ -43,7 +43,11 @@ find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf
 print_title "Formatting Files"
 ruff format
 printf "\n"
-prettier "./src/**/*.{json,graphql}" --write
+ruff check --fix
+printf "\n"
+prettier "./**/*.{yaml,json,md,graphql,sh,Dockerfile,sql}" "./**/Dockerfile*" --write
+printf "\n"
+npx sort-package-json
 
 # ** info: exporting dependencies if needed
 if [[ " ${staged_files[@]} " =~ " poetry.lock " ]]; then

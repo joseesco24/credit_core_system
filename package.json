@@ -3,50 +3,57 @@
 	"version": "v1.1.0",
 	"description": "a simple credit core backend implementation using fastapi as the main framework and a modular and hexagonal software architecture",
 	"author": {
-		"email": "josed.escobar@outlook.com",
-		"name": "joseesco24"
+		"name": "joseesco24",
+		"email": "josed.escobar@outlook.com"
 	},
-	"readme": "readme.md",
 	"scripts": {
-		"export-dependencies": "poetry export --without-hashes --only dev --format=requirements.txt > ./dependencies/develop/requirements.txt && poetry export --without-hashes --format=requirements.txt > ./dependencies/production/requirements.txt",
 		"clean-cache": "find . | grep -E \"(/__pycache__$|\\.pyc$|\\.pyo$)\" | xargs rm -rf && rm -rf .pytest_cache .ruff_cache",
-		"docker-ms-image-build": "docker compose -f docker_compose/microservice/image.build.yaml build",
-		"docker-ms-image-push": "docker push ghcr.io/joseesco24/credit_core_system_ms --all-tags",
-		"docker-ms-stop": "docker compose -f docker_compose/microservice/deploy.full.yaml down",
-		"docker-ms-start": "docker compose -f docker_compose/microservice/deploy.full.yaml up",
+		"commitmsg": "bash ./hooks/commit-msg.sh",
 		"docker-db-image-build": "docker compose -f docker_compose/mysql_database/image.build.yaml build",
 		"docker-db-image-push": "docker push ghcr.io/joseesco24/credit_core_system_db_mysql --all-tags",
-		"docker-db-stop": "docker compose -f docker_compose/mysql_database/deploy.full.yaml down",
 		"docker-db-start": "docker compose -f docker_compose/mysql_database/deploy.full.yaml up",
-		"format": "ruff format && printf \"\n\" && prettier \"./src/**/*.{json,graphql}\" --write",
-		"start": "cp -f .env.example .env && python src/credit_core_system.py",
-		"overwrite-lock-files": "npm install --lock-file-only && poetry lock",
-		"commitmsg": "bash ./.husky/commit-msg.sh",
-		"precommit": "bash ./.husky/pre-commit.sh",
+		"docker-db-stop": "docker compose -f docker_compose/mysql_database/deploy.full.yaml down",
+		"docker-ms-image-build": "docker compose -f docker_compose/microservice/image.build.yaml build",
+		"docker-ms-image-push": "docker push ghcr.io/joseesco24/credit_core_system_ms --all-tags",
+		"docker-ms-start": "docker compose -f docker_compose/microservice/deploy.full.yaml up",
+		"docker-ms-stop": "docker compose -f docker_compose/microservice/deploy.full.yaml down",
+		"export-dependencies": "poetry export --without-hashes --only dev --format=requirements.txt > ./dependencies/develop/requirements.txt && poetry export --without-hashes --format=requirements.txt > ./dependencies/production/requirements.txt",
+		"format": "ruff format && printf \"\n\" && ruff check --fix && printf \"\n\" && prettier \"./**/*.{yaml,json,md,graphql,sh,Dockerfile,sql}\" \"./**/Dockerfile*\" --write && printf \"\n\" && npx sort-package-json",
 		"postinstall": "npx husky install",
 		"lint": "ruff check --fix",
+		"lock-files": "npm install --lock-file-only && poetry lock",
+		"precommit": "bash ./hooks/pre-commit.sh",
+		"start": "cp -f .env.example .env && python src/credit_core_system.py",
 		"test": "pytest --verbose"
 	},
 	"prettier": {
-		"trailingComma": "es5",
-		"useTabs": true,
-		"semi": false,
-		"singleQuote": false,
+		"arrowParens": "always",
+		"bracketSameLine": false,
+		"bracketSpacing": false,
+		"endOfLine": "lf",
+		"insertPragma": false,
+		"plugins": [
+			"prettier-plugin-sh",
+			"prettier-plugin-sql"
+		],
+		"printWidth": 180,
 		"proseWrap": "preserve",
 		"quoteProps": "consistent",
-		"bracketSpacing": false,
-		"bracketSameLine": false,
-		"arrowParens": "always",
-		"insertPragma": false,
-		"endOfLine": "lf",
-		"printWidth": 180,
-		"rangeStart": 0
+		"rangeStart": 0,
+		"semi": false,
+		"singleQuote": false,
+		"trailingComma": "es5",
+		"useTabs": true
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.8.2",
-		"@commitlint/cli": "^19.3.0",
-		"@commitlint/config-conventional": "^19.2.2",
-		"husky": "^9.0.11",
-		"prettier": "^3.3.2"
-	}
+		"@biomejs/biome": "2.0.0",
+		"@commitlint/cli": "^19.8.1",
+		"@commitlint/config-conventional": "^19.8.1",
+		"husky": "^9.1.7",
+		"prettier": "^3.5.3",
+		"prettier-plugin-sh": "0.17.1",
+		"prettier-plugin-sql": "0.19.1",
+		"sort-package-json": "3.2.1"
+	},
+	"readme": "readme.md"
 }

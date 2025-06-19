@@ -12,4 +12,4 @@ ENV MYSQL_DATABASE=credit_system_db
 ENV MYSQL_USER=credit_system_user
 
 # ** info: copying the migrations from the building context to the initdb folder
-COPY ["migrations/mysql_database", "/docker-entrypoint-initdb.d/"]
+COPY migrations/mysql_database /docker-entrypoint-initdb.d/
