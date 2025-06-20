@@ -147,6 +147,34 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "authenticate",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/user/authenticate",
+									"host": ["{{HOST}}"],
+									"path": ["rest", "user", "authenticate"]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -166,7 +194,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"userId\": \"1\"\n}",
+									"raw": "{\n    \"userId\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -255,7 +283,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"accountId\": \"1\"\n}",
+									"raw": "{\n    \"accountId\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -283,7 +311,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"userId\": \"2\"\n}",
+									"raw": "{\n    \"userId\": 2\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -311,7 +339,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"requestStatus\": \"0\"\n}",
+									"raw": "{\n    \"requestStatus\": 0\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -339,7 +367,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"requestId\": \"2\"\n}",
+									"raw": "{\n    \"requestId\": 2\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -378,6 +406,39 @@
 									"raw": "{{HOST}}/rest/credit-request/create",
 									"host": ["{{HOST}}"],
 									"path": ["rest", "credit-request", "create"]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "credit-request-transition",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"transitionId\": 8, \n    \"requestId\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/credit-request-transition/make-transition",
+									"host": ["{{HOST}}"],
+									"path": ["rest", "credit-request-transition", "make-transition"]
 								}
 							},
 							"response": []
@@ -522,7 +583,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query {\n    peticiones: getCreditRequestByFilters (\n        userId: 1\n        ) {\n        idPeticion: requestId\n    }\n}",
+										"query": "query {\n    peticiones: getCreditRequestByFilters (\n        userId: 2\n        ) {\n        idPeticion: requestId\n    }\n}",
 										"variables": ""
 									}
 								},

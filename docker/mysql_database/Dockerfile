@@ -3,7 +3,7 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 # ** info: declaration of the image base version
-FROM mysql:9.3.0
+FROM mysql:8.0.36
 
 # ** info: declaration of the container env variables
 ENV MYSQL_ROOT_PASSWORD=credit_system_password

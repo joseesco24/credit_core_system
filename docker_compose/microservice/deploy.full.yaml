@@ -1,19 +1,19 @@
 services:
   credit_core_system_ms:
     container_name: credit_core_system_ms
-    image: ghcr.io/joseesco24/credit_core_system_ms:v1.2.0
+    image: ghcr.io/joseesco24/credit_core_system_ms:v1.3.2
     environment:
       APP_ENVIRONMENT_MODE: "production"
-      APP_LOGGING_MODE: "structured"
+      APP_LOGGING_MODE: "pretty"
       APP_LOGGING_LEVEL: "DEBUG"
-      APP_SERVER_PORT: 10050
+      APP_SERVER_PORT: 10048
       APP_SWAGGER_DOCS: "true"
       APP_POSIX_LOCALE: "es_CO.UTF-8"
       APP_TIME_ZONE: "America/Bogota"
       DATABASE_PASSWORD: "credit_system_password"
       DATABASE_HOST: "credit_core_system_db_mysql"
       DATABASE_USER: "credit_system_user"
-      DATABASE_LOGS: "true"
+      DATABASE_LOGS: "false"
       DATABASE_NAME: "credit_system_db"
       DATABASE_PORT: 3306
       IDENTITY_VALIDATION_MS_BASE_URL: "https://www.random.org"
@@ -25,11 +25,10 @@ services:
         published: 10048
         protocol: tcp
     depends_on:
-      - sar_bd_mysql
-      - sar_brms
+      - credit_core_system_db_mysql
   credit_core_system_db_mysql:
     container_name: credit_core_system_db_mysql
-    image: ghcr.io/joseesco24/credit_core_system_db_mysql:v1.1.0
+    image: ghcr.io/joseesco24/credit_core_system_db_mysql:v1.2.0
     networks:
       - credit_core_system_network
     ports:
