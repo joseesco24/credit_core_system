@@ -1,0 +1,401 @@
+{
+	"openapi": "3.1.0",
+	"info": {
+		"title": "Credit Core System",
+		"description": "a simple credit core backend implementation using fastapi as the main framework and a modular and hexagonal software architecture",
+		"version": "v1.3.2"
+	},
+	"paths": {
+		"/rest/heart-beat/": {
+			"post": {
+				"tags": ["Heart Beat"],
+				"summary": "allows to check if the service is or not healthy",
+				"description": "allows to check if the service is or not healthy",
+				"operationId": "api_heart_beat_rest_heart_beat__post",
+				"responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}
+			}
+		},
+		"/rest/user/create": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "allow to create a new user",
+				"description": "allow to create a new user",
+				"operationId": "create_user_rest_user_create_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserCreationRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserDataResponseDto"}}}},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/user/authenticate": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "allow to authenticate a user",
+				"description": "allow to authenticate a user",
+				"operationId": "authenticate_user_rest_user_authenticate_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserAuthenticationRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserAuthenticationResponseDto"}}}},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/user/search-by-email": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "allow to get a user info by its email",
+				"description": "allow to get a user info by its email",
+				"operationId": "get_user_by_email_rest_user_search_by_email_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserByEmailRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserDataResponseDto"}}}},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/user/search-by-id": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "allow to get a user info by its id",
+				"description": "allow to get a user info by its id",
+				"operationId": "get_user_by_id_rest_user_search_by_id_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserByIdRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserDataResponseDto"}}}},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/user/search-by-document": {
+			"post": {
+				"tags": ["Users"],
+				"summary": "allow to get a user info by its document",
+				"description": "allow to get a user info by its document",
+				"operationId": "get_user_by_document_rest_user_search_by_document_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserByDocumentRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/UserDataResponseDto"}}}},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/account/create": {
+			"post": {
+				"tags": ["Accounts"],
+				"summary": "allow to create a new account",
+				"description": "allow to create a new account",
+				"operationId": "create_account_rest_account_create_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/AccountCreationRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AccountDataResponseDto"}}}},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/account/search-by-id": {
+			"post": {
+				"tags": ["Accounts"],
+				"summary": "allow to get a account info by its id",
+				"description": "allow to get a account info by its id",
+				"operationId": "get_account_by_id_rest_account_search_by_id_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/AccountByIdRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AccountDataResponseDto"}}}},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/account/search-by-user-id": {
+			"post": {
+				"tags": ["Accounts"],
+				"summary": "allow to get accounts info by user id",
+				"description": "allow to get accounts info by user id",
+				"operationId": "get_account_by_document_rest_account_search_by_user_id_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/AccountByUserIdRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {"$ref": "#/components/schemas/AccountDataResponseDto"},
+									"type": "array",
+									"title": "Response Get Account By Document Rest Account Search By User Id Post"
+								}
+							}
+						}
+					},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/credit-request/create": {
+			"post": {
+				"tags": ["Credit Request"],
+				"summary": "allow to create a new credit request",
+				"description": "allow to create a new credirt request",
+				"operationId": "create_user_rest_credit_request_create_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreditRequestCreationRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreditRequestDataResponseDto"}}}},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/credit-request/search-by-id": {
+			"post": {
+				"tags": ["Credit Request"],
+				"summary": "search credit request by id",
+				"description": "search credit request by id",
+				"operationId": "search_by_id_rest_credit_request_search_by_id_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreditRequestByIdRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreditRequestDataResponseDto"}}}},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/credit-request/search-by-user-id": {
+			"post": {
+				"tags": ["Credit Request"],
+				"summary": "search credit request by user id",
+				"description": "search credit request by user id",
+				"operationId": "search_by_user_id_rest_credit_request_search_by_user_id_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreditRequestByUserIdRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {"$ref": "#/components/schemas/CreditRequestDataResponseDto"},
+									"type": "array",
+									"title": "Response Search By User Id Rest Credit Request Search By User Id Post"
+								}
+							}
+						}
+					},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/credit-request/search-by-account-id": {
+			"post": {
+				"tags": ["Credit Request"],
+				"summary": "search credit request by account id",
+				"description": "search credit request by account id",
+				"operationId": "search_by_account_id_rest_credit_request_search_by_account_id_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreditRequestByAccountIdRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {"$ref": "#/components/schemas/CreditRequestDataResponseDto"},
+									"type": "array",
+									"title": "Response Search By Account Id Rest Credit Request Search By Account Id Post"
+								}
+							}
+						}
+					},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/credit-request/search-by-status": {
+			"post": {
+				"tags": ["Credit Request"],
+				"summary": "search credit request by status",
+				"description": "search credit request by status",
+				"operationId": "search_by_status_rest_credit_request_search_by_status_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreditRequestByStatusRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {
+						"description": "Successful Response",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {"$ref": "#/components/schemas/CreditRequestDataResponseDto"},
+									"type": "array",
+									"title": "Response Search By Status Rest Credit Request Search By Status Post"
+								}
+							}
+						}
+					},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		},
+		"/rest/credit-request-transition/make-transition": {
+			"post": {
+				"tags": ["Credit Request Transition"],
+				"summary": "allow to change the status of a credit request",
+				"description": "allow to change the status of a credit request",
+				"operationId": "create_user_rest_credit_request_transition_make_transition_post",
+				"requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreditRequestMakeTransitionRequestDto"}}}, "required": true},
+				"responses": {
+					"200": {"description": "Successful Response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/CreditRequestDataResponseDto"}}}},
+					"422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"AccountByIdRequestDto": {
+				"properties": {"accountId": {"type": "integer", "title": "Accountid"}},
+				"type": "object",
+				"required": ["accountId"],
+				"title": "AccountByIdRequestDto"
+			},
+			"AccountByUserIdRequestDto": {
+				"properties": {"userId": {"type": "integer", "title": "Userid"}},
+				"type": "object",
+				"required": ["userId"],
+				"title": "AccountByUserIdRequestDto"
+			},
+			"AccountCreationRequestDto": {
+				"properties": {"userId": {"type": "integer", "title": "Userid"}},
+				"type": "object",
+				"required": ["userId"],
+				"title": "AccountCreationRequestDto"
+			},
+			"AccountDataResponseDto": {
+				"properties": {
+					"accountId": {"type": "integer", "title": "Accountid"},
+					"userId": {"type": "integer", "title": "Userid"},
+					"availableAmount": {"type": "number", "title": "Availableamount"},
+					"createdAt": {"type": "string", "format": "date-time", "title": "Createdat"},
+					"updatedAt": {"type": "string", "format": "date-time", "title": "Updatedat"}
+				},
+				"type": "object",
+				"required": ["accountId", "userId", "availableAmount", "createdAt", "updatedAt"],
+				"title": "AccountDataResponseDto"
+			},
+			"CreditRequestByAccountIdRequestDto": {
+				"properties": {"accountId": {"type": "integer", "title": "Accountid"}},
+				"type": "object",
+				"required": ["accountId"],
+				"title": "CreditRequestByAccountIdRequestDto"
+			},
+			"CreditRequestByIdRequestDto": {
+				"properties": {"requestId": {"type": "integer", "title": "Requestid"}},
+				"type": "object",
+				"required": ["requestId"],
+				"title": "CreditRequestByIdRequestDto"
+			},
+			"CreditRequestByStatusRequestDto": {
+				"properties": {"requestStatus": {"type": "integer", "title": "Requeststatus"}},
+				"type": "object",
+				"required": ["requestStatus"],
+				"title": "CreditRequestByStatusRequestDto"
+			},
+			"CreditRequestByUserIdRequestDto": {
+				"properties": {"userId": {"type": "integer", "title": "Userid"}},
+				"type": "object",
+				"required": ["userId"],
+				"title": "CreditRequestByUserIdRequestDto"
+			},
+			"CreditRequestCreationRequestDto": {
+				"properties": {"userId": {"type": "integer", "title": "Userid"}, "accountId": {"type": "integer", "title": "Accountid"}, "amount": {"type": "number", "title": "Amount"}},
+				"type": "object",
+				"required": ["userId", "accountId", "amount"],
+				"title": "CreditRequestCreationRequestDto"
+			},
+			"CreditRequestDataResponseDto": {
+				"properties": {
+					"requestId": {"type": "integer", "title": "Requestid"},
+					"accountId": {"type": "integer", "title": "Accountid"},
+					"userId": {"type": "integer", "title": "Userid"},
+					"score": {"anyOf": [{"type": "integer"}, {"type": "null"}], "title": "Score"},
+					"requestStatus": {"type": "integer", "title": "Requeststatus"},
+					"amount": {"type": "number", "title": "Amount"},
+					"createdAt": {"type": "string", "format": "date-time", "title": "Createdat"},
+					"updatedAt": {"type": "string", "format": "date-time", "title": "Updatedat"}
+				},
+				"type": "object",
+				"required": ["requestId", "accountId", "userId", "score", "requestStatus", "amount", "createdAt", "updatedAt"],
+				"title": "CreditRequestDataResponseDto"
+			},
+			"CreditRequestMakeTransitionRequestDto": {
+				"properties": {"transitionId": {"type": "integer", "title": "Transitionid"}, "requestId": {"type": "integer", "title": "Requestid"}},
+				"type": "object",
+				"required": ["transitionId", "requestId"],
+				"title": "CreditRequestMakeTransitionRequestDto"
+			},
+			"HTTPValidationError": {
+				"properties": {"detail": {"items": {"$ref": "#/components/schemas/ValidationError"}, "type": "array", "title": "Detail"}},
+				"type": "object",
+				"title": "HTTPValidationError"
+			},
+			"UserAuthenticationRequestDto": {
+				"properties": {"userId": {"type": "integer", "minimum": 0.0, "title": "Userid"}},
+				"type": "object",
+				"required": ["userId"],
+				"title": "UserAuthenticationRequestDto"
+			},
+			"UserAuthenticationResponseDto": {
+				"properties": {"isValidated": {"type": "boolean", "title": "Isvalidated"}},
+				"type": "object",
+				"required": ["isValidated"],
+				"title": "UserAuthenticationResponseDto"
+			},
+			"UserByDocumentRequestDto": {
+				"properties": {"documentNumber": {"type": "integer", "minimum": 0.0, "title": "Documentnumber"}},
+				"type": "object",
+				"required": ["documentNumber"],
+				"title": "UserByDocumentRequestDto"
+			},
+			"UserByEmailRequestDto": {
+				"properties": {"emailAddress": {"type": "string", "maxLength": 100, "format": "email", "title": "Emailaddress"}},
+				"type": "object",
+				"required": ["emailAddress"],
+				"title": "UserByEmailRequestDto"
+			},
+			"UserByIdRequestDto": {
+				"properties": {"userId": {"type": "integer", "minimum": 0.0, "title": "Userid"}},
+				"type": "object",
+				"required": ["userId"],
+				"title": "UserByIdRequestDto"
+			},
+			"UserCreationRequestDto": {
+				"properties": {
+					"emailAddress": {"type": "string", "maxLength": 100, "format": "email", "title": "Emailaddress"},
+					"firstName": {"type": "string", "maxLength": 100, "title": "Firstname"},
+					"lastName": {"type": "string", "maxLength": 100, "title": "Lastname"},
+					"documentNumber": {"type": "integer", "minimum": 0.0, "title": "Documentnumber"}
+				},
+				"type": "object",
+				"required": ["emailAddress", "firstName", "lastName", "documentNumber"],
+				"title": "UserCreationRequestDto"
+			},
+			"UserDataResponseDto": {
+				"properties": {
+					"userId": {"type": "integer", "title": "Userid"},
+					"documentNumber": {"type": "integer", "title": "Documentnumber"},
+					"emailAddress": {"type": "string", "title": "Emailaddress"},
+					"firstName": {"type": "string", "title": "Firstname"},
+					"lastName": {"type": "string", "title": "Lastname"},
+					"isValidated": {"anyOf": [{"type": "boolean"}, {"type": "null"}], "title": "Isvalidated"},
+					"createdAt": {"type": "string", "format": "date-time", "title": "Createdat"},
+					"updatedAt": {"type": "string", "format": "date-time", "title": "Updatedat"}
+				},
+				"type": "object",
+				"required": ["userId", "documentNumber", "emailAddress", "firstName", "lastName", "isValidated", "createdAt", "updatedAt"],
+				"title": "UserDataResponseDto"
+			},
+			"ValidationError": {
+				"properties": {
+					"loc": {"items": {"anyOf": [{"type": "string"}, {"type": "integer"}]}, "type": "array", "title": "Location"},
+					"msg": {"type": "string", "title": "Message"},
+					"type": {"type": "string", "title": "Error Type"}
+				},
+				"type": "object",
+				"required": ["loc", "msg", "type"],
+				"title": "ValidationError"
+			}
+		}
+	}
+}
