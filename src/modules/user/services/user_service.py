@@ -58,6 +58,10 @@ class UserService(metaclass=Singleton):
     async def authenticate_user_orchestator(self: Self, user_authentication_request: UserAuthenticationRequestDto) -> UserAuthenticationResponseDto:
         logging.debug("starting authenticate_user_orchestator")
         user_data: UserEntitie = self._found_user_by_id_or_fail(search_id=user_authentication_request.id)
+        if user_data:
+            logging.info("user is already valid")
+            response = UserMappers.user_entitie_2_user_authentication_response_dto(user_entite=user_data)
+            return response
         is_valid: bool = await self._user_authentication_client.obtain_user_autentication()
         user_data.is_validated = is_valid
         updated_user_data: UserEntitie = self._user_repositorie.update_user(updated_user=user_data)

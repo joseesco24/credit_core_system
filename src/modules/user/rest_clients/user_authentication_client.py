@@ -3,7 +3,6 @@ from typing import Self
 from urllib.parse import urljoin
 
 import httpx
-from asyncache import cached as async_cached
 from cachetools import TTLCache
 from fastapi import HTTPException
 from fastapi import status
@@ -26,7 +25,6 @@ class UserAuthenticationClient:
     def clear_cache(self: Self) -> None:
         user_authentication_client_cache.clear()
 
-    @async_cached(user_authentication_client_cache)
     @retry(on=HTTPException, attempts=8, wait_initial=0.4, wait_exp_base=2)
     async def obtain_user_autentication(self: Self) -> bool:
         logging.debug("obtaining user authentication from authentication api")
