@@ -95,7 +95,7 @@ available potsman collection at: `docs/postman/credit_core_system.postman_collec
 
 - `getCreditRequestByFilters`: Flexible credit request search with requestId, userId, requestStatus
 
-## Execution Dependencies
+## Docker Execution Dependencies
 
 - Node: 18.20.3(Optional)
 - NPM: 10.7.0(Optional)
