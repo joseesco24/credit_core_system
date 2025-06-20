@@ -1,4 +1,5 @@
 from src.modules.user.mysql_entites.user_entity import UserEntitie
+from src.modules.user.rest_controllers_dtos.user_dtos import UserAuthenticationResponseDto
 from src.modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
 
 
@@ -14,4 +15,10 @@ class UserMappers:
             is_validated=user_entite.is_validated,  # type: ignore
             created_at=user_entite.created_at.isoformat(),  # type: ignore
             updated_at=user_entite.updated_at.isoformat(),  # type: ignore
+        )
+
+    @staticmethod
+    def user_entitie_2_user_authentication_response_dto(user_entite: UserEntitie) -> UserAuthenticationResponseDto:
+        return UserAuthenticationResponseDto(
+            is_validated=user_entite.is_validated  # type: ignore
         )

@@ -30,7 +30,8 @@ class AccountService(metaclass=Singleton):
 
     async def create_account_orchestator(self: Self, account_creation_request: AccountCreationRequestDto) -> AccountDataResponseDto:
         logging.debug("starting create_account_orchestator")
-        await self._user_service.get_user_by_id_orchestator(UserByIdRequestDto(userId=account_creation_request.user_id))
+        user = await self._user_service.get_user_by_id_orchestator(UserByIdRequestDto(userId=account_creation_request.user_id))
+        await self._user_service.check_if_user_is_valid_orchestator(user_id=user.id)
         new_account_data: AccountEntitie = self._create_new_account(account_creation_request=account_creation_request)
         response = AccountMappers.account_entitie_2_account_data_response_dto(account_entite=new_account_data)
         logging.debug("ending create_account_orchestator")

@@ -8,7 +8,8 @@
 		"EM002": "user with email {{ email }} not found",
 		"EM003": "the document {{ document }} already exist on the system",
 		"EM004": "user with document {{ document }} not found",
-		"EM005": "user with {{ id }} not found"
+		"EM005": "user with {{ id }} not found",
+		"EM006": "user is not already validated"
 	},
 	"credit_request": {
 		"EM001": "account {{ account_id }} does not belong to user {{ user_id }}",

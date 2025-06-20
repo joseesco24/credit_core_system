@@ -15,6 +15,10 @@ class UserCreationRequestDto(BaseModel):
     document: int = Field(..., ge=0, alias="documentNumber")
 
 
+class UserAuthenticationRequestDto(BaseModel):
+    id: int = Field(..., ge=0, alias="userId")
+
+
 class UserByEmailRequestDto(BaseModel):
     email: EmailStr = Field(..., max_length=100, alias="emailAddress")
 
@@ -25,6 +29,13 @@ class UserByIdRequestDto(BaseModel):
 
 class UserByDocumentRequestDto(BaseModel):
     document: int = Field(..., ge=0, alias="documentNumber")
+
+
+class UserAuthenticationResponseDto(BaseModel):
+    is_validated: bool = Field(..., alias="isValidated")
+
+    class Config:
+        populate_by_name = True
 
 
 class UserDataResponseDto(BaseModel):

@@ -4,11 +4,14 @@ from typing import Union
 
 from fastapi import HTTPException
 from fastapi import status as HttpStatus
+from modules.user.rest_clients.user_authentication_client import UserAuthenticationClient
 from sidecard.system.helpers.singleton_helper import Singleton
 
 from src.modules.user.mappers.user_mappers import UserMappers
 from src.modules.user.mysql_entites.user_entity import UserEntitie
 from src.modules.user.mysql_repositories.user_repositorie import UserRepositorie
+from src.modules.user.rest_controllers_dtos.user_dtos import UserAuthenticationRequestDto
+from src.modules.user.rest_controllers_dtos.user_dtos import UserAuthenticationResponseDto
 from src.modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto
 from src.modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto
 from src.modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto
@@ -20,9 +23,10 @@ __all__: list[str] = ["UserService"]
 
 
 class UserService(metaclass=Singleton):
-    __slots__ = ["_user_repositorie", "_i8n"]
+    __slots__ = ["_user_authentication_client", "_user_repositorie", "_i8n"]
 
     def __init__(self: Self):
+        self._user_authentication_client: UserAuthenticationClient = UserAuthenticationClient()
         self._user_repositorie: UserRepositorie = UserRepositorie()
         self._i8n: I8nProvider = I8nProvider(module="user")
 
@@ -50,6 +54,25 @@ class UserService(metaclass=Singleton):
         response: list[UserDataResponseDto] = list(map(lambda user_entite: UserMappers.user_entitie_2_user_data_response_dto(user_entite).model_dump(by_alias=True), users_data))  # type: ignore
         logging.debug("ending get_user_by_filters_orchestator")
         return response
+
+    async def authenticate_user_orchestator(self: Self, user_authentication_request: UserAuthenticationRequestDto) -> UserAuthenticationResponseDto:
+        logging.debug("starting authenticate_user_orchestator")
+        user_data: UserEntitie = self._found_user_by_id_or_fail(search_id=user_authentication_request.id)
+        is_valid: bool = await self._user_authentication_client.obtain_user_autentication()
+        user_data.is_validated = is_valid
+        updated_user_data: UserEntitie = self._user_repositorie.update_user(updated_user=user_data)
+        response = UserMappers.user_entitie_2_user_authentication_response_dto(user_entite=updated_user_data)
+        logging.debug("ending authenticate_user_orchestator")
+        return response
+
+    async def check_if_user_is_valid_orchestator(self: Self, user_id: int) -> UserEntitie:
+        logging.debug("starting check_if_user_is_valid_orchestator")
+        user_entite: UserEntitie = self._found_user_by_id_or_fail(search_id=user_id)
+        if not user_entite.is_validated:
+            logging.error("user is not validated")
+            raise HTTPException(status_code=HttpStatus.HTTP_403_FORBIDDEN, detail=self._i8n.message(message_key="EM006", email=user_entite.email))
+        logging.debug("ending check_if_user_is_valid_orchestator")
+        return user_entite
 
     async def get_user_by_email_orchestator(self: Self, user_by_email_request: UserByEmailRequestDto) -> UserDataResponseDto:
         logging.debug("starting get_user_by_email_orchestator")

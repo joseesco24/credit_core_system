@@ -38,6 +38,7 @@ class CreditRequestService(metaclass=Singleton):
     async def create_credit_request_orchestator(self: Self, credit_request_creation_request: CreditRequestCreationRequestDto) -> CreditRequestDataResponseDto:
         logging.debug("starting create_credit_request_orchestator")
         user = await self._user_service.get_user_by_id_orchestator(UserByIdRequestDto(userId=credit_request_creation_request.user_id))
+        await self._user_service.check_if_user_is_valid_orchestator(user_id=user.id)
         account = await self._account_service.get_account_by_id_orchestator(AccountByIdRequestDto(accountId=credit_request_creation_request.account_id))
         self._check_if_acount_belongs_to_user(user=user, account=account)
         new_credit_request_data: CreditRequestEntitie = self._create_new_credit_request(credit_request_creation_request=credit_request_creation_request)

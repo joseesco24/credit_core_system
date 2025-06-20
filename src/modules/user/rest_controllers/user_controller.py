@@ -2,6 +2,8 @@ from fastapi import APIRouter
 from fastapi import Body
 from fastapi import status as HttpStatus
 
+from src.modules.user.rest_controllers_dtos.user_dtos import UserAuthenticationRequestDto
+from src.modules.user.rest_controllers_dtos.user_dtos import UserAuthenticationResponseDto
 from src.modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto
 from src.modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto
 from src.modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto
@@ -26,6 +28,18 @@ _user_service: UserService = UserService()
 async def create_user(user_creation_request: UserCreationRequestDto = Body(...)) -> UserDataResponseDto:
     user_creation_response: UserDataResponseDto = await _user_service.create_user_orchestator(user_creation_request)
     return user_creation_response
+
+
+@user_controller.post(
+    description="allow to authenticate a user",
+    summary="allow to authenticate a user",
+    path=_path_provider.build_posix_path("authenticate"),
+    response_model=UserAuthenticationResponseDto,
+    status_code=HttpStatus.HTTP_200_OK,
+)
+async def authenticate_user(user_authentication_request: UserAuthenticationRequestDto = Body(...)) -> UserAuthenticationResponseDto:
+    user_by_email_response: UserAuthenticationResponseDto = await _user_service.authenticate_user_orchestator(user_authentication_request)
+    return user_by_email_response
 
 
 @user_controller.post(

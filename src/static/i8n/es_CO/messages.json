@@ -8,7 +8,8 @@
 		"EM002": "el usuario con el correo {{ email }} no fue encontrado",
 		"EM003": "el document {{ document }} ya fué registrado en el sistema",
 		"EM004": "el usuario con el document {{ document }} no fue encontrado",
-		"EM005": "el usuario con el id {{ id }} no fue encontrado"
+		"EM005": "el usuario con el id {{ id }} no fue encontrado",
+		"EM006": "el usuario no está validado"
 	},
 	"credit_request": {
 		"EM001": "la cuenta {{ account_id }} no le pertenece al usuario {{ user_id }}",

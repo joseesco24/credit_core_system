@@ -50,6 +50,17 @@ class UserRepositorie:
         logging.debug("new user with basic info created")
         return new_user
 
+    @retry(on=Exception, attempts=4, wait_initial=0.08, wait_exp_base=2)
+    def update_user(self: Self, updated_user: UserEntitie) -> UserEntitie:
+        logging.debug("updating user")
+        session: Session = self._session_manager.obtain_session()
+        session.add(updated_user)
+        session.commit()
+        session.refresh(updated_user)
+        self._clear_cache()
+        logging.debug("account user")
+        return updated_user
+
     @cached(user_provider_cache)
     @retry(on=Exception, attempts=4, wait_initial=0.08, wait_exp_base=2)
     def search_user_by_filters(
