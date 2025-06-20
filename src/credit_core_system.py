@@ -30,6 +30,7 @@ from src.modules.account.graphql_controllers.account_controller import account_g
 from src.modules.account.rest_controllers.account_controller import account_controller
 from src.modules.credit_request.graphql_controllers.credit_request_controller import credit_request_gpl_controller
 from src.modules.credit_request.rest_controllers.credit_request_controller import credit_request_controller
+from src.modules.credit_request.rest_controllers.credit_request_transition_controller import credit_request_transition_controller
 from src.modules.heart_beat.rest_controllers.heart_beat_controller import heart_beat_controller
 from src.modules.user.graphql_controllers.user_controller import user_gpl_controller
 from src.modules.user.rest_controllers.user_controller import user_controller
@@ -109,6 +110,7 @@ rest_router.include_router(router=heart_beat_controller)
 rest_router.include_router(router=user_controller)
 rest_router.include_router(router=account_controller)
 rest_router.include_router(router=credit_request_controller)
+rest_router.include_router(router=credit_request_transition_controller)
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: mounting rest based routers

@@ -17,5 +17,9 @@
 		"EM003": "no credit requests found for user {{ user_id }}",
 		"EM004": "no credit requests found for account {{ account_id }}",
 		"EM005": "no credit requests found with status {{ status }}"
+	},
+	"credit_request_states_machine": {
+		"EM001": "not valid transition",
+		"EM002": "not valid transition"
 	}
 }

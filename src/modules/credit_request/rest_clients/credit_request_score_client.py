@@ -12,15 +12,15 @@ from stamina import retry
 
 from src.sidecard.system.artifacts.env_provider import EnvProvider
 
-__all__: list[str] = ["UserAuthenticationClient"]
+__all__: list[str] = ["CreditRequestScoreClient"]
 
 user_authentication_client_cache: TTLCache = TTLCache(ttl=3600, maxsize=20)
 
 
-class UserAuthenticationClient:
+class CreditRequestScoreClient:
     def __init__(self: Self):
         self._env_provider: EnvProvider = EnvProvider()  # type: ignore
-        self.base_url: str = str(self._env_provider.identity_validation_ms_base_url)
+        self.base_url: str = str(self._env_provider.scoring_ms_base_url)
         self._httpx_client: httpx.AsyncClient = httpx.AsyncClient()
 
     def clear_cache(self: Self) -> None:
@@ -28,23 +28,23 @@ class UserAuthenticationClient:
 
     @async_cached(user_authentication_client_cache)
     @retry(on=HTTPException, attempts=8, wait_initial=0.4, wait_exp_base=2)
-    async def obtain_user_autentication(self: Self) -> bool:
-        logging.debug("obtaining user authentication from authentication api")
-        url: str = urljoin(self.base_url, r"/integers/?num=1&min=0&max=1&col=1&base=10&format=plain&rnd=new")
+    async def obtain_credit_request_score(self: Self) -> int:
+        logging.debug("obtaining credit score from credit scoring api")
+        url: str = urljoin(self.base_url, r"/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new")
         logging.debug(f"authentication client api url: {url}")
         try:
             raw_response: Response = await self._httpx_client.get(url=url, timeout=10)
         except Exception:
-            logging.error("error unable to connect to authentication api")
+            logging.error("error unable to connect to credit scoring api")
             raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE)
         if raw_response.status_code != status.HTTP_200_OK:
-            logging.error("the authentication api didnt respond correctly")
+            logging.error("the credit scoring api api didnt respond correctly")
             raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE)
         try:
-            is_valid: bool = int(str(raw_response.text).strip()) == 1
+            score: int = int(str(raw_response.text).strip())
         except Exception:
-            logging.error("error parsing response from authentication api")
+            logging.error("error parsing response from credit scoring api")
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
         self.clear_cache()
-        logging.debug("user authentication obtained from authentication api")
-        return is_valid
+        logging.debug("credit score obtained from credit scoring api")
+        return score

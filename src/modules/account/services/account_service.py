@@ -48,21 +48,21 @@ class AccountService(metaclass=Singleton):
 
     async def get_account_by_id_orchestator(self: Self, account_by_id_request: AccountByIdRequestDto) -> AccountDataResponseDto:
         logging.debug("starting get_account_by_id_orchestator")
-        account_data: AccountEntitie = self._found_account_by_id_or_fail(id=account_by_id_request.id)
+        account_data: AccountEntitie = self._found_account_by_id_or_fail(search_id=account_by_id_request.id)
         response = AccountMappers.account_entitie_2_account_data_response_dto(account_entite=account_data)
         logging.debug("ending get_account_by_id_orchestator")
         return response
 
     async def get_accounts_by_user_id_orchestator(self: Self, account_by_user_id_request: AccountByUserIdRequestDto) -> list[AccountDataResponseDto]:
         logging.debug("starting get_accounts_by_user_id_orchestator")
-        accounts_data: list[AccountEntitie] = self._found_accounts_by_user_id_or_fail(user_id=account_by_user_id_request.user_id)
+        accounts_data: list[AccountEntitie] = self._found_accounts_by_user_id_or_fail(search_user_id=account_by_user_id_request.user_id)
         response: list[AccountDataResponseDto] = list(map(lambda account_entite: AccountMappers.account_entitie_2_account_data_response_dto(account_entite), accounts_data))
         logging.debug("ending get_accounts_by_user_id_orchestator")
         return response
 
     async def sum_to_account_amount_orchestator(self: Self, account_id: int, amount: float) -> AccountDataResponseDto:
         logging.debug("starting sum_to_account_amount_orchestator")
-        account_data: AccountEntitie = self._found_account_by_id_or_fail(id=account_id)
+        account_data: AccountEntitie = self._found_account_by_id_or_fail(search_id=account_id)
         account_data.amount += amount
         updated_account: AccountEntitie = self._account_repositorie.update_account(updated_account=account_data)
         response = AccountMappers.account_entitie_2_account_data_response_dto(account_entite=updated_account)
@@ -75,16 +75,16 @@ class AccountService(metaclass=Singleton):
         logging.debug("new account created")
         return new_account
 
-    def _found_account_by_id_or_fail(self: Self, id: int) -> AccountEntitie:
-        user_data_by_email: AccountEntitie = self._account_repositorie.search_account_by_id(id=id)
+    def _found_account_by_id_or_fail(self: Self, search_id: int) -> AccountEntitie:
+        user_data_by_email: AccountEntitie = self._account_repositorie.search_account_by_id(id=search_id)
         if not user_data_by_email:
             logging.error("account not found by id")
-            raise HTTPException(status_code=HttpStatus.HTTP_404_NOT_FOUND, detail=self._i8n.message(message_key="EM001", id=id))
+            raise HTTPException(status_code=HttpStatus.HTTP_404_NOT_FOUND, detail=self._i8n.message(message_key="EM001", id=search_id))
         return user_data_by_email
 
-    def _found_accounts_by_user_id_or_fail(self: Self, user_id: int) -> list[AccountEntitie]:
-        user_data_by_id: list[AccountEntitie] = self._account_repositorie.search_account_by_user_id(user_id=user_id)
+    def _found_accounts_by_user_id_or_fail(self: Self, search_user_id: int) -> list[AccountEntitie]:
+        user_data_by_id: list[AccountEntitie] = self._account_repositorie.search_account_by_user_id(user_id=search_user_id)
         if not user_data_by_id:
             logging.error("account not found by user id")
-            raise HTTPException(status_code=HttpStatus.HTTP_404_NOT_FOUND, detail=self._i8n.message(message_key="EM002", user_id=user_id))
+            raise HTTPException(status_code=HttpStatus.HTTP_404_NOT_FOUND, detail=self._i8n.message(message_key="EM002", user_id=search_user_id))
         return user_data_by_id

@@ -4,12 +4,12 @@ from typing import Union
 
 from fastapi import HTTPException
 from fastapi import status as HttpStatus
-from modules.user.rest_clients.user_authentication_client import UserAuthenticationClient
 from sidecard.system.helpers.singleton_helper import Singleton
 
 from src.modules.user.mappers.user_mappers import UserMappers
 from src.modules.user.mysql_entites.user_entity import UserEntitie
 from src.modules.user.mysql_repositories.user_repositorie import UserRepositorie
+from src.modules.user.rest_clients.user_authentication_client import UserAuthenticationClient
 from src.modules.user.rest_controllers_dtos.user_dtos import UserAuthenticationRequestDto
 from src.modules.user.rest_controllers_dtos.user_dtos import UserAuthenticationResponseDto
 from src.modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto

@@ -17,5 +17,9 @@
 		"EM003": "no se encontraron solicitudes de crédito para el usuario {{ user_id }}",
 		"EM004": "no se encontraron solicitudes de crédito para la cuenta {{ account_id }}",
 		"EM005": "no se encontraron solicitudes de crédito con estado {{ status }}"
+	},
+	"credit_request_states_machine": {
+		"EM001": "transición no válida",
+		"EM002": "transición no válida"
 	}
 }
