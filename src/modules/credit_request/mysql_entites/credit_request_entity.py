@@ -5,15 +5,15 @@ from sqlmodel import Field
 from sqlmodel import SQLModel
 
 
-class UserEntitie(SQLModel, table=True):
+class CreditRequestEntitie(SQLModel, table=True):
     __table_args__ = {"extend_existing": True}
-    __tablename__ = "user"  # type: ignore
+    __tablename__ = "credit_request"  # type: ignore
 
     id: int = Field(nullable=False, primary_key=True)
-    document: int = Field(nullable=False)
-    email: str = Field(nullable=False, max_length=100, unique=True)
-    name: str = Field(nullable=False, max_length=100)
-    last_name: str = Field(nullable=False, max_length=100)
-    is_validated: Optional[bool] = Field(nullable=True)
+    account_id: int = Field(nullable=False)
+    user_id: int = Field(nullable=False)
+    score: Optional[int] = Field(nullable=True)
+    status: int = Field(nullable=False)
+    amount: float = Field(nullable=True)
     created_at: datetime = Field(nullable=False, default_factory=datetime.now)
     updated_at: datetime = Field(nullable=False, default_factory=datetime.now)

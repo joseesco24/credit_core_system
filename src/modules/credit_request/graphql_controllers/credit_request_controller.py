@@ -10,18 +10,18 @@ from ariadne.validation import cost_validator
 from graphql import GraphQLSchema
 from starlette.routing import Route
 
-from src.modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
-from src.modules.user.services.user_service import UserService
+from src.modules.credit_request.rest_controllers_dtos.credit_request_dtos import CreditRequestDataResponseDto
+from src.modules.credit_request.services.credit_request_service import CreditRequestService
 from src.sidecard.system.artifacts.env_provider import EnvProvider
 from src.sidecard.system.artifacts.path_provider import PathProvider
 from src.sidecard.system.graphql.custom_scalars_serializer import float_scalar
 from src.sidecard.system.graphql.custom_scalars_serializer import integer_scalar
 from src.sidecard.system.graphql.error_formatter import error_formatter
 
-__all__: list[str] = ["user_gpl_controller"]
+__all__: list[str] = ["credit_request_gpl_controller"]
 
 # ** info: building router core
-_user_service: UserService = UserService()
+_credit_request_service: CreditRequestService = CreditRequestService()
 
 # ** info: building sidecards
 _path_provider: PathProvider = PathProvider()
@@ -32,7 +32,7 @@ _env_provider: EnvProvider = EnvProvider()  # type: ignore
 # ---------------------------------------------------------------------------------------------------------------------
 
 current_file_path: Path = Path(__file__).parent.resolve()
-schema_path: Path = Path(current_file_path, "..", "graphql_controllers_dtos", "user_dtos.graphql")
+schema_path: Path = Path(current_file_path, "..", "graphql_controllers_dtos", "credit_request_dtos.graphql")
 schema_literal: str = load_schema_from_path(path=str(schema_path))
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -42,20 +42,19 @@ schema_literal: str = load_schema_from_path(path=str(schema_path))
 query: QueryType = QueryType()
 
 
-@query.field("getUserByFilters")
+@query.field("getCreditRequestByFilters")
 async def get_user_by_filters(
     *_: Any,
+    requestId: Union[int, None] = None,
+    accountId: Union[int, None] = None,
     userId: Union[int, None] = None,
-    documentNumber: Union[int, None] = None,
-    emailAddress: Union[str, None] = None,
-    firstName: Union[str, None] = None,
-    lastName: Union[str, None] = None,
-    isValidated: Union[bool, None] = None,
-) -> list[UserDataResponseDto]:
-    user_full_data_reponse: list[UserDataResponseDto] = await _user_service.get_user_by_filters_orchestator(
-        id=userId, document=documentNumber, email=emailAddress, name=firstName, last_name=lastName, is_validated=isValidated
+    score: Union[int, None] = None,
+    requestStatus: Union[int, None] = None,
+) -> list[CreditRequestDataResponseDto]:
+    credit_request_full_data_reponse: list[CreditRequestDataResponseDto] = await _credit_request_service.get_credit_request_by_filters_orchestator(
+        id=requestId, account_id=accountId, user_id=userId, score=score, status=requestStatus
     )
-    return user_full_data_reponse
+    return credit_request_full_data_reponse
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -80,4 +79,4 @@ graphql_endpoint_definition: GraphQL = GraphQL(
 # ** info: assembling graphql endpoint with the main router
 # ---------------------------------------------------------------------------------------------------------------------
 
-user_gpl_controller: Route = Route(path=_path_provider.build_posix_path("user"), endpoint=graphql_endpoint_definition)
+credit_request_gpl_controller: Route = Route(path=_path_provider.build_posix_path("credit-request"), endpoint=graphql_endpoint_definition)

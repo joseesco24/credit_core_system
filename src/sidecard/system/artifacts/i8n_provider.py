@@ -1,11 +1,12 @@
 import json
 import locale
-from jinja2 import Template
+from os.path import dirname
+from os.path import join
+from os.path import realpath
 from typing import Dict
 from typing import Self
-from os.path import join
-from os.path import dirname
-from os.path import realpath
+
+from jinja2 import Template
 
 __all__: list[str] = ["I8nProvider"]
 

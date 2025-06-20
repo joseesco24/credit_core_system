@@ -2,11 +2,11 @@ scalar Integer
 scalar Float
 
 type Query {
-	getAccountByFilters(accountId: ID, userId: Integer): [Account!]!
+	getAccountByFilters(accountId: Integer, userId: Integer): [Account!]!
 }
 
 type Account {
-	accountId: ID!
+	accountId: Integer!
 	userId: Integer!
 	availableAmount: Float!
 	createdAt: String!

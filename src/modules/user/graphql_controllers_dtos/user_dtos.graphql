@@ -2,11 +2,11 @@ scalar Integer
 scalar Float
 
 type Query {
-	getUserByFilters(userId: ID, documentNumber: Integer, emailAddress: String, firstName: String, lastName: String, isValidated: Boolean): [User!]!
+	getUserByFilters(userId: Integer, documentNumber: Integer, emailAddress: String, firstName: String, lastName: String, isValidated: Boolean): [User!]!
 }
 
 type User {
-	userId: ID!
+	userId: Integer!
 	documentNumber: Integer!
 	emailAddress: String!
 	firstName: String!

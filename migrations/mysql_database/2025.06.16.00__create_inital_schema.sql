@@ -21,6 +21,7 @@ create table `account` (
 
 create table `credit_request` (
 	`id` integer not null auto_increment primary key,
+	`account_id` integer not null,
 	`user_id` integer not null,
 	`score` integer,
 	`status` integer not null,

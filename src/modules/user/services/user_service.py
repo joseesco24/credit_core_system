@@ -1,19 +1,20 @@
 import logging
-from typing import List
 from typing import Self
 from typing import Union
+
 from fastapi import HTTPException
-from fastapi import status
-from modules.user.mappers.user_mappers import UserMappers
-from modules.user.mysql_entites.user_entity import UserEntitie
+from fastapi import status as HttpStatus
 from sidecard.system.helpers.singleton_helper import Singleton
+
+from src.modules.user.mappers.user_mappers import UserMappers
+from src.modules.user.mysql_entites.user_entity import UserEntitie
+from src.modules.user.mysql_repositories.user_repositorie import UserRepositorie
+from src.modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto
+from src.modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto
+from src.modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto
+from src.modules.user.rest_controllers_dtos.user_dtos import UserCreationRequestDto
+from src.modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
 from src.sidecard.system.artifacts.i8n_provider import I8nProvider
-from modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto
-from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
-from modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto
-from modules.user.rest_controllers_dtos.user_dtos import UserCreationRequestDto
-from modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto
-from modules.user.mysql_repositories.user_repositorie import UserRepositorie
 
 __all__: list[str] = ["UserService"]
 
@@ -29,8 +30,9 @@ class UserService(metaclass=Singleton):
         logging.debug("starting create_user_orchestator")
         self._check_if_user_already_exists(user_creation_request=user_creation_request)
         new_user_data: UserEntitie = self._create_new_user(user_creation_request=user_creation_request)
+        response = UserMappers.user_entitie_2_user_data_response_dto(user_entite=new_user_data)
         logging.debug("ending create_user_orchestator")
-        return UserMappers.user_entitie_2_user_data_response_dto(user_entite=new_user_data)
+        return response
 
     async def get_user_by_filters_orchestator(
         self: Self,
@@ -40,42 +42,46 @@ class UserService(metaclass=Singleton):
         name: Union[str, None] = None,
         last_name: Union[str, None] = None,
         is_validated: Union[bool, None] = None,
-    ) -> List[UserDataResponseDto]:
+    ) -> list[UserDataResponseDto]:
         logging.debug("starting get_user_by_filters_orchestator")
-        users_data: List[UserEntitie] = self._user_repositorie.search_user_by_filters(
+        users_data: list[UserEntitie] = self._user_repositorie.search_user_by_filters(
             id=id, document=document, email=email, name=name, last_name=last_name, is_validated=is_validated
         )
+        response: list[UserDataResponseDto] = list(map(lambda user_entite: UserMappers.user_entitie_2_user_data_response_dto(user_entite).model_dump(by_alias=True), users_data))  # type: ignore
         logging.debug("ending get_user_by_filters_orchestator")
-        return list(map(lambda user_entite: UserMappers.user_entitie_2_user_data_response_dto(user_entite).model_dump(by_alias=True), users_data))  # type: ignore
+        return response
 
     async def get_user_by_email_orchestator(self: Self, user_by_email_request: UserByEmailRequestDto) -> UserDataResponseDto:
         logging.debug("starting get_user_by_email_orchestator")
         user_data: UserEntitie = self._found_user_by_email_or_fail(search_email=user_by_email_request.email)
+        response = UserMappers.user_entitie_2_user_data_response_dto(user_entite=user_data)
         logging.debug("ending get_user_by_email_orchestator")
-        return UserMappers.user_entitie_2_user_data_response_dto(user_entite=user_data)
+        return response
 
     async def get_user_by_id_orchestator(self: Self, user_by_id_request: UserByIdRequestDto) -> UserDataResponseDto:
         logging.debug("starting get_user_by_id_orchestator")
         user_data: UserEntitie = self._found_user_by_id_or_fail(search_id=user_by_id_request.id)
+        response = UserMappers.user_entitie_2_user_data_response_dto(user_entite=user_data)
         logging.debug("ending get_user_by_id_orchestator")
-        return UserMappers.user_entitie_2_user_data_response_dto(user_entite=user_data)
+        return response
 
     async def get_user_by_document_orchestator(self: Self, user_by_document_request: UserByDocumentRequestDto) -> UserDataResponseDto:
         logging.debug("starting get_user_by_document_orchestator")
         user_data: UserEntitie = self._found_user_by_document_or_fail(search_document=user_by_document_request.document)
+        response = UserMappers.user_entitie_2_user_data_response_dto(user_entite=user_data)
         logging.debug("ending get_user_by_document_orchestator")
-        return UserMappers.user_entitie_2_user_data_response_dto(user_entite=user_data)
+        return response
 
     def _check_if_user_already_exists(self: Self, user_creation_request: UserCreationRequestDto) -> None:
         logging.debug("checking if user exists")
         user_data_by_email: UserEntitie = self._user_repositorie.search_user_by_email(email=user_creation_request.email)
         if user_data_by_email:
             logging.error("user already exists")
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=self._i8n.message(message_key="EM001", email=user_creation_request.email))
+            raise HTTPException(status_code=HttpStatus.HTTP_409_CONFLICT, detail=self._i8n.message(message_key="EM001", email=user_creation_request.email))
         user_data_by_document: UserEntitie = self._user_repositorie.search_user_by_document(document=user_creation_request.document)
         if user_data_by_document:
             logging.error("user already exists")
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=self._i8n.message(message_key="EM003", docuement=user_creation_request.document))
+            raise HTTPException(status_code=HttpStatus.HTTP_409_CONFLICT, detail=self._i8n.message(message_key="EM003", docuement=user_creation_request.document))
         logging.debug("user does not exist")
 
     def _create_new_user(self: Self, user_creation_request: UserCreationRequestDto) -> UserEntitie:
@@ -90,19 +96,19 @@ class UserService(metaclass=Singleton):
         user_data_by_email: UserEntitie = self._user_repositorie.search_user_by_email(email=search_email)
         if not user_data_by_email:
             logging.error("user not found by email")
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=self._i8n.message(message_key="EM002", email=search_email))
+            raise HTTPException(status_code=HttpStatus.HTTP_404_NOT_FOUND, detail=self._i8n.message(message_key="EM002", email=search_email))
         return user_data_by_email
 
     def _found_user_by_id_or_fail(self: Self, search_id: int) -> UserEntitie:
         user_data_by_id: UserEntitie = self._user_repositorie.search_user_by_id(id=search_id)
         if not user_data_by_id:
             logging.error("user not found by id")
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=self._i8n.message(message_key="EM005", id=search_id))
+            raise HTTPException(status_code=HttpStatus.HTTP_404_NOT_FOUND, detail=self._i8n.message(message_key="EM005", id=search_id))
         return user_data_by_id
 
     def _found_user_by_document_or_fail(self: Self, search_document: int) -> UserEntitie:
         user_data_by_document: UserEntitie = self._user_repositorie.search_user_by_document(document=search_document)
         if not user_data_by_document:
             logging.error("user not found by document")
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=self._i8n.message(message_key="EM004", document=search_document))
+            raise HTTPException(status_code=HttpStatus.HTTP_404_NOT_FOUND, detail=self._i8n.message(message_key="EM004", document=search_document))
         return user_data_by_document

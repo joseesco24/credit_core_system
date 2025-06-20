@@ -29,7 +29,7 @@
     "peacock.color": "#42b883"
   },
   "launch": {
-    "version": "v1.1.0",
+    "version": "v1.2.0",
     "configurations": [
       {
         "name": "credit_core_system",

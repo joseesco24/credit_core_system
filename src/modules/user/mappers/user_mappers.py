@@ -1,5 +1,5 @@
-from modules.user.mysql_entites.user_entity import UserEntitie
-from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
+from src.modules.user.mysql_entites.user_entity import UserEntitie
+from src.modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
 
 
 class UserMappers:

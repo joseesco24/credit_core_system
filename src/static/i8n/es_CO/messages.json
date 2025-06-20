@@ -9,5 +9,12 @@
 		"EM003": "el document {{ document }} ya fué registrado en el sistema",
 		"EM004": "el usuario con el document {{ document }} no fue encontrado",
 		"EM005": "el usuario con el id {{ id }} no fue encontrado"
+	},
+	"credit_request": {
+		"EM001": "la cuenta {{ account_id }} no le pertenece al usuario {{ user_id }}",
+		"EM002": "la solicitud de crédito {{ id }} no se encontró",
+		"EM003": "no se encontraron solicitudes de crédito para el usuario {{ user_id }}",
+		"EM004": "no se encontraron solicitudes de crédito para la cuenta {{ account_id }}",
+		"EM005": "no se encontraron solicitudes de crédito con estado {{ status }}"
 	}
 }

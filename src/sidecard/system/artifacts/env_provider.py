@@ -1,4 +1,5 @@
 from enum import Enum
+
 from pydantic import Field
 from pydantic import HttpUrl
 from pydantic_settings import BaseSettings

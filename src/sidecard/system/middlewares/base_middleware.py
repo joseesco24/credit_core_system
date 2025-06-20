@@ -1,6 +1,6 @@
+from contextvars import Context
 from typing import Dict
 from typing import Self
-from contextvars import Context
 
 __all__: list[str] = ["BaseMiddleware"]
 

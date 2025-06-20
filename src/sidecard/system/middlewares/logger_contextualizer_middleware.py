@@ -1,11 +1,13 @@
 import logging
-from loguru import logger
-from typing import Self
 from typing import Callable
+from typing import Self
+
+from loguru import logger
 from starlette.requests import Request
 from starlette.responses import StreamingResponse
-from src.sidecard.system.artifacts.uuid_provider import UuidProvider
+
 from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
+from src.sidecard.system.artifacts.uuid_provider import UuidProvider
 from src.sidecard.system.middlewares.base_middleware import BaseMiddleware
 
 __all__: list[str] = ["LoggerContextualizerMiddleware"]

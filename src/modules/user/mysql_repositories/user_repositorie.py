@@ -1,18 +1,19 @@
 import logging
 from typing import Any
-from typing import List
 from typing import Self
 from typing import Union
-from stamina import retry
+
+from cachetools import TTLCache
+from cachetools import cached
 from sqlmodel import Session
 from sqlmodel import col
 from sqlmodel import select
-from cachetools import TTLCache
-from cachetools import cached
-from modules.user.mysql_entites.user_entity import UserEntitie
+from stamina import retry
+
+from src.modules.user.mysql_entites.user_entity import UserEntitie
+from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
 from src.sidecard.system.artifacts.env_provider import EnvProvider
 from src.sidecard.system.artifacts.uuid_provider import UuidProvider
-from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
 from src.sidecard.system.database_managers.mysql_manager import MySQLManager
 
 __all__: list[str] = ["UserRepositorie"]
@@ -59,7 +60,7 @@ class UserRepositorie:
         name: Union[str, None] = None,
         last_name: Union[str, None] = None,
         is_validated: Union[bool, None] = None,
-    ) -> List[UserEntitie]:
+    ) -> list[UserEntitie]:
         logging.debug("searching user by filters")
         session: Session = self._session_manager.obtain_session()
         query: Any = select(UserEntitie)
@@ -75,7 +76,7 @@ class UserRepositorie:
             query = query.where(col(UserEntitie.last_name).contains(last_name))
         if is_validated is not None:
             query = query.where(UserEntitie.is_validated == is_validated)
-        query_result: List[UserEntitie] = session.exec(statement=query).all()
+        query_result: list[UserEntitie] = session.exec(statement=query).all()
         logging.debug("searching user by filters ended")
         return query_result
 

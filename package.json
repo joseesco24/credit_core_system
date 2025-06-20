@@ -1,6 +1,6 @@
 {
 	"name": "credit_core_system",
-	"version": "v1.1.0",
+	"version": "v1.2.0",
 	"description": "a simple credit core backend implementation using fastapi as the main framework and a modular and hexagonal software architecture",
 	"author": {
 		"name": "joseesco24",

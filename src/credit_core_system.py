@@ -14,26 +14,29 @@ sys.path.append(join(path.dirname(path.realpath(__file__)), "..", "."))
 
 import gc
 import logging
-import uvicorn
 from typing import Any
 from typing import Dict
-from typing import List
-from fastapi import FastAPI
+
+import uvicorn
 from fastapi import APIRouter
-from starlette.routing import Mount
-from starlette.routing import Route
-from starlette.routing import BaseRoute
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
-from src.sidecard.system.artifacts.env_provider import EnvProvider
-from src.sidecard.system.artifacts.path_provider import PathProvider
-from src.sidecard.system.artifacts.logging_provider import LoggingProvider
-from src.modules.user.rest_controllers.user_controller import user_controller
-from src.modules.user.graphql_controllers.user_controller import user_gpl_controller
-from src.modules.account.rest_controllers.account_controller import account_controller
-from src.sidecard.system.middlewares.error_handler_middleware import ErrorHandlerMiddleware
+from starlette.routing import BaseRoute
+from starlette.routing import Mount
+from starlette.routing import Route
+
 from src.modules.account.graphql_controllers.account_controller import account_gpl_controller
+from src.modules.account.rest_controllers.account_controller import account_controller
+from src.modules.credit_request.graphql_controllers.credit_request_controller import credit_request_gpl_controller
+from src.modules.credit_request.rest_controllers.credit_request_controller import credit_request_controller
 from src.modules.heart_beat.rest_controllers.heart_beat_controller import heart_beat_controller
+from src.modules.user.graphql_controllers.user_controller import user_gpl_controller
+from src.modules.user.rest_controllers.user_controller import user_controller
+from src.sidecard.system.artifacts.env_provider import EnvProvider
+from src.sidecard.system.artifacts.logging_provider import LoggingProvider
+from src.sidecard.system.artifacts.path_provider import PathProvider
+from src.sidecard.system.middlewares.error_handler_middleware import ErrorHandlerMiddleware
 from src.sidecard.system.middlewares.logger_contextualizer_middleware import LoggerContextualizerMiddleware
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -58,7 +61,7 @@ else:
 # ** info: initializing graphql based routers
 # ---------------------------------------------------------------------------------------------------------------------
 
-routes: List[Route] = []
+routes: list[Route] = []
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: setting graphql based routers
@@ -66,12 +69,13 @@ routes: List[Route] = []
 
 routes.append(user_gpl_controller)
 routes.append(account_gpl_controller)
+routes.append(credit_request_gpl_controller)
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: mounting graphql based routers
 # ---------------------------------------------------------------------------------------------------------------------
 
-graphql_routers: List[BaseRoute] = [Mount(path=path_provider.build_posix_path("graphql"), routes=routes)]
+graphql_routers: list[BaseRoute] = [Mount(path=path_provider.build_posix_path("graphql"), routes=routes)]
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: initializing app metadata and documentation
@@ -80,7 +84,7 @@ graphql_routers: List[BaseRoute] = [Mount(path=path_provider.build_posix_path("g
 metadata: Dict[str, Any] = {
     "description": "a simple credit core backend implementation using fastapi as the main framework and a modular and hexagonal software architecture",
     "title": "Credit Core System",
-    "version": "v1.1.0",
+    "version": "v1.2.0",
 }
 
 credit_core_system: FastAPI
@@ -104,6 +108,7 @@ rest_router: APIRouter = APIRouter(prefix=path_provider.build_posix_path("rest")
 rest_router.include_router(router=heart_beat_controller)
 rest_router.include_router(router=user_controller)
 rest_router.include_router(router=account_controller)
+rest_router.include_router(router=credit_request_controller)
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ** info: mounting rest based routers

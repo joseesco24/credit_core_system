@@ -1,18 +1,20 @@
-import sys
 import json
 import logging
+import sys
 import traceback
+from datetime import datetime
 from types import FrameType
 from types import TracebackType
-from loguru import logger
 from typing import Any
 from typing import Dict
 from typing import Self
 from typing import Union
-from datetime import datetime
+
+from loguru import logger
 from loguru._recattrs import RecordException
-from src.sidecard.system.artifacts.env_provider import EnvProvider
+
 from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
+from src.sidecard.system.artifacts.env_provider import EnvProvider
 
 __all__: list[str] = ["LoggingProvider"]
 
@@ -26,7 +28,7 @@ class LoggingProvider:
         "rqStartTime": _datetime_provider.get_current_time(),  # type: ignore
         "internalId": "397d4343-2855-4c92-b64b-58ee82006e0b",
         "externalId": "97c3cb45-453f-4bd0-b0d5-d06cd568be27",
-        "version": "v1.1.0",
+        "version": "v1.2.0",
     }
 
     @classmethod

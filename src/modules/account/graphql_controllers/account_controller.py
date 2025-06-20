@@ -1,21 +1,22 @@
+from pathlib import Path
 from typing import Any
-from typing import List
 from typing import Union
+
 from ariadne import QueryType
 from ariadne import load_schema_from_path
 from ariadne import make_executable_schema
-from graphql import GraphQLSchema
-from pathlib import Path
 from ariadne.asgi import GraphQL
-from starlette.routing import Route
 from ariadne.validation import cost_validator
-from modules.account.services.account_service import AccountService
+from graphql import GraphQLSchema
+from starlette.routing import Route
+
+from src.modules.account.rest_controllers_dtos.account_dtos import AccountDataResponseDto
+from src.modules.account.services.account_service import AccountService
 from src.sidecard.system.artifacts.env_provider import EnvProvider
 from src.sidecard.system.artifacts.path_provider import PathProvider
-from src.sidecard.system.graphql.error_formatter import error_formatter
-from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
 from src.sidecard.system.graphql.custom_scalars_serializer import float_scalar
 from src.sidecard.system.graphql.custom_scalars_serializer import integer_scalar
+from src.sidecard.system.graphql.error_formatter import error_formatter
 
 __all__: list[str] = ["account_gpl_controller"]
 
@@ -42,8 +43,8 @@ query: QueryType = QueryType()
 
 
 @query.field("getAccountByFilters")
-async def get_user_by_filters(*_: Any, accountId: Union[int, None] = None, userId: Union[int, None] = None) -> List[UserDataResponseDto]:
-    account_full_data_reponse: List[UserDataResponseDto] = await _account_service.get_account_by_filters_orchestator(id=accountId, user_id=userId)
+async def get_user_by_filters(*_: Any, accountId: Union[int, None] = None, userId: Union[int, None] = None) -> list[AccountDataResponseDto]:
+    account_full_data_reponse: list[AccountDataResponseDto] = await _account_service.get_account_by_filters_orchestator(id=accountId, user_id=userId)
     return account_full_data_reponse
 
 
@@ -58,11 +59,11 @@ schema_executable: GraphQLSchema = make_executable_schema(schema_literal, query,
 # ---------------------------------------------------------------------------------------------------------------------
 
 graphql_endpoint_definition: GraphQL = GraphQL(
-    introspection=False if _env_provider.app_environment_mode == "production" else True,
     debug=False if _env_provider.app_environment_mode == "production" else True,
     validation_rules=[cost_validator(maximum_cost=5)],
     error_formatter=error_formatter.formatter,
     schema=schema_executable,
+    introspection=True,
 )
 
 # ---------------------------------------------------------------------------------------------------------------------

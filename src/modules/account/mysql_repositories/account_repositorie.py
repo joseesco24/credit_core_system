@@ -1,17 +1,18 @@
 import logging
 from typing import Any
-from typing import List
 from typing import Self
 from typing import Union
-from stamina import retry
-from sqlmodel import Session
-from sqlmodel import select
+
 from cachetools import TTLCache
 from cachetools import cached
+from sqlmodel import Session
+from sqlmodel import select
+from stamina import retry
+
+from src.modules.account.mysql_entites.account_entity import AccountEntitie
+from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
 from src.sidecard.system.artifacts.env_provider import EnvProvider
 from src.sidecard.system.artifacts.uuid_provider import UuidProvider
-from modules.account.mysql_entites.account_entity import AccountEntitie
-from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
 from src.sidecard.system.database_managers.mysql_manager import MySQLManager
 
 __all__: list[str] = ["AccountRepositorie"]
@@ -61,15 +62,15 @@ class AccountRepositorie:
 
     @cached(account_provider_cache)
     @retry(on=Exception, attempts=4, wait_initial=0.08, wait_exp_base=2)
-    def search_account_by_filters(self: Self, id: Union[int, None] = None, user_id: Union[int, None] = None) -> List[AccountEntitie]:
+    def search_account_by_filters(self: Self, id: Union[int, None] = None, user_id: Union[int, None] = None) -> list[AccountEntitie]:
         logging.debug("searching account by filters")
         session: Session = self._session_manager.obtain_session()
         query: Any = select(AccountEntitie)
-        if user_id is not None:
-            query = query.where(AccountEntitie.user_id == user_id)
         if id is not None:
             query = query.where(AccountEntitie.id == id)
-        query_result: List[AccountEntitie] = session.exec(statement=query).all()
+        if user_id is not None:
+            query = query.where(AccountEntitie.user_id == user_id)
+        query_result: list[AccountEntitie] = session.exec(statement=query).all()
         logging.debug("searching account by filters ended")
         return query_result
 
@@ -85,10 +86,10 @@ class AccountRepositorie:
 
     @cached(account_provider_cache)
     @retry(on=Exception, attempts=4, wait_initial=0.08, wait_exp_base=2)
-    def search_account_by_user_id(self: Self, user_id: int) -> List[AccountEntitie]:
+    def search_account_by_user_id(self: Self, user_id: int) -> list[AccountEntitie]:
         logging.debug(f"searching account by user id {user_id}")
         session: Session = self._session_manager.obtain_session()
         query: Any = select(AccountEntitie).where(AccountEntitie.user_id == user_id)
-        query_result: List[AccountEntitie] = session.exec(statement=query).all()
+        query_result: list[AccountEntitie] = session.exec(statement=query).all()
         logging.debug("searching account by user id ended")
         return query_result

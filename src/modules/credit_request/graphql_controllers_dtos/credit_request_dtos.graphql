@@ -1,0 +1,17 @@
+scalar Integer
+scalar Float
+
+type Query {
+	getCreditRequestByFilters(requestId: Integer, accountId: Integer, userId: Integer, score: Int, requestStatus: Int): [CreditRequest!]!
+}
+
+type CreditRequest {
+	requestId: Integer!
+	accountId: Integer!
+	userId: Integer!
+	score: Int
+	requestStatus: Int!
+	amount: Float!
+	createdAt: String!
+	updatedAt: String!
+}

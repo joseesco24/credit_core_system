@@ -1,4 +1,5 @@
 from typing import Self
+
 from ariadne import format_error
 from graphql import GraphQLError
 

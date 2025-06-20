@@ -10,6 +10,30 @@
 			"name": "rest",
 			"item": [
 				{
+					"name": "heart-beat",
+					"item": [
+						{
+							"name": "root",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{HOST}}/rest/heart-beat/",
+									"host": ["{{HOST}}"],
+									"path": ["rest", "heart-beat", ""]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "user",
 					"item": [
 						{
@@ -109,7 +133,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"emailAddress\": \"pedro.perez@correo.com.co\",\n    \"lastName\": \"Perez Sarmiento\",\n    \"firstName\": \"Pedro Alejandro\",\n    \"documentNumber\": 1074315264\n}",
+									"raw": "{\n    \"emailAddress\": \"pedro.perez@correo.com.com\",\n    \"lastName\": \"Perez Sarmiento\",\n    \"firstName\": \"Pedro Alejandro\",\n    \"documentNumber\": 1074315268\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -198,7 +222,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"userId\": 1\n}",
+									"raw": "{\n    \"userId\": 2\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -216,10 +240,10 @@
 					]
 				},
 				{
-					"name": "heart-beat",
+					"name": "credit-request",
 					"item": [
 						{
-							"name": "root",
+							"name": "search-by-account-id",
 							"request": {
 								"method": "POST",
 								"header": [
@@ -229,10 +253,131 @@
 										"type": "text"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"accountId\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{HOST}}/rest/heart-beat/",
+									"raw": "{{HOST}}/rest/credit-request/search-by-account-id",
 									"host": ["{{HOST}}"],
-									"path": ["rest", "heart-beat", ""]
+									"path": ["rest", "credit-request", "search-by-account-id"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search-by-user-id",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": \"2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/credit-request/search-by-user-id",
+									"host": ["{{HOST}}"],
+									"path": ["rest", "credit-request", "search-by-user-id"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search-by-status",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestStatus\": \"0\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/credit-request/search-by-status",
+									"host": ["{{HOST}}"],
+									"path": ["rest", "credit-request", "search-by-status"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search-by-id",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"requestId\": \"2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/credit-request/search-by-id",
+									"host": ["{{HOST}}"],
+									"path": ["rest", "credit-request", "search-by-id"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "joseesco24",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 2,\n    \"accountId\": 1,\n    \"amount\": 100.0022\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/rest/credit-request/create",
+									"host": ["{{HOST}}"],
+									"path": ["rest", "credit-request", "create"]
 								}
 							},
 							"response": []
@@ -336,6 +481,55 @@
 									"raw": "{{HOST}}/graphql/account",
 									"host": ["{{HOST}}"],
 									"path": ["graphql", "account"]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "credit-request",
+					"item": [
+						{
+							"name": "userById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"test response status\", function() {",
+											"    pm.response.to.have.status(200)",
+											"})",
+											"",
+											"pm.test(\"test response time is less than 300s\", function() {",
+											"    pm.expect(pm.response.responseTime).to.be.below(300)",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "request-id",
+										"value": "782ff804-00e4-4abe-b90b-d720fc468a2f",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "query {\n    peticiones: getCreditRequestByFilters (\n        userId: 1\n        ) {\n        idPeticion: requestId\n    }\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "{{HOST}}/graphql/credit-request",
+									"host": ["{{HOST}}"],
+									"path": ["graphql", "credit-request"]
 								}
 							},
 							"response": []

@@ -9,5 +9,12 @@
 		"EM003": "the document {{ document }} already exist on the system",
 		"EM004": "user with document {{ document }} not found",
 		"EM005": "user with {{ id }} not found"
+	},
+	"credit_request": {
+		"EM001": "account {{ account_id }} does not belong to user {{ user_id }}",
+		"EM002": "credit request {{ id }} not found",
+		"EM003": "no credit requests found for user {{ user_id }}",
+		"EM004": "no credit requests found for account {{ account_id }}",
+		"EM005": "no credit requests found with status {{ status }}"
 	}
 }

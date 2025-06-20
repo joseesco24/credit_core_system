@@ -1,8 +1,9 @@
-from typing import Optional
 from datetime import datetime
-from pydantic import Field
-from pydantic import EmailStr
+from typing import Optional
+
 from pydantic import BaseModel
+from pydantic import EmailStr
+from pydantic import Field
 
 __all__: list[str] = ["UserCreationRequestDto", "UserByEmailRequestDto", "UserByIdRequestDto", "UserByDocumentRequestDto", "UserDataResponseDto"]
 

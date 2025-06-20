@@ -1,7 +1,7 @@
 services:
   credit_core_system_ms:
     container_name: credit_core_system_ms
-    image: ghcr.io/joseesco24/credit_core_system_ms:v1.1.0
+    image: ghcr.io/joseesco24/credit_core_system_ms:v1.2.0
     environment:
       APP_ENVIRONMENT_MODE: "production"
       APP_LOGGING_MODE: "structured"

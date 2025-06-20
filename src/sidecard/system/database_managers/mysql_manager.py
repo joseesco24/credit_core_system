@@ -1,15 +1,17 @@
 import gc
 import logging
 from typing import Self
+
 from fastapi import HTTPException
-from fastapi import status
-from sqlmodel import Session
-from sqlmodel import create_engine
+from fastapi import status as HttpStatus
 from sqlalchemy import URL
 from sqlalchemy import text
+from sqlmodel import Session
+from sqlmodel import create_engine
+
+from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
 from src.sidecard.system.artifacts.env_provider import EnvProvider
 from src.sidecard.system.artifacts.uuid_provider import UuidProvider
-from src.sidecard.system.artifacts.datetime_provider import DatetimeProvider
 
 __all__: list[str] = ["MySQLManager"]
 
@@ -66,7 +68,7 @@ class MySQLManager:
         self._end_session_and_engine()
         logging.error("connection shuted down")
         logging.error("a new attempt to restart the connection is going to be executed on the next database request")
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE)
+        raise HTTPException(status_code=HttpStatus.HTTP_503_SERVICE_UNAVAILABLE)
 
     def _test_qeury(self: Self) -> bool:
         if self._connection_id is None:

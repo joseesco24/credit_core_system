@@ -1,13 +1,14 @@
-from fastapi import Body
 from fastapi import APIRouter
-from fastapi import status
-from modules.user.services.user_service import UserService
+from fastapi import Body
+from fastapi import status as HttpStatus
+
+from src.modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto
+from src.modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto
+from src.modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto
+from src.modules.user.rest_controllers_dtos.user_dtos import UserCreationRequestDto
+from src.modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
+from src.modules.user.services.user_service import UserService
 from src.sidecard.system.artifacts.path_provider import PathProvider
-from modules.user.rest_controllers_dtos.user_dtos import UserByIdRequestDto
-from modules.user.rest_controllers_dtos.user_dtos import UserDataResponseDto
-from modules.user.rest_controllers_dtos.user_dtos import UserByEmailRequestDto
-from modules.user.rest_controllers_dtos.user_dtos import UserCreationRequestDto
-from modules.user.rest_controllers_dtos.user_dtos import UserByDocumentRequestDto
 
 __all__: list[str] = ["user_controller"]
 _path_provider: PathProvider = PathProvider()
@@ -20,7 +21,7 @@ _user_service: UserService = UserService()
     summary="allow to create a new user",
     path=_path_provider.build_posix_path("create"),
     response_model=UserDataResponseDto,
-    status_code=status.HTTP_200_OK,
+    status_code=HttpStatus.HTTP_200_OK,
 )
 async def create_user(user_creation_request: UserCreationRequestDto = Body(...)) -> UserDataResponseDto:
     user_creation_response: UserDataResponseDto = await _user_service.create_user_orchestator(user_creation_request)
@@ -32,7 +33,7 @@ async def create_user(user_creation_request: UserCreationRequestDto = Body(...))
     summary="allow to get a user info by its email",
     path=_path_provider.build_posix_path("search-by-email"),
     response_model=UserDataResponseDto,
-    status_code=status.HTTP_200_OK,
+    status_code=HttpStatus.HTTP_200_OK,
 )
 async def get_user_by_email(user_by_email_request: UserByEmailRequestDto = Body(...)) -> UserDataResponseDto:
     user_by_email_response: UserDataResponseDto = await _user_service.get_user_by_email_orchestator(user_by_email_request)
@@ -44,7 +45,7 @@ async def get_user_by_email(user_by_email_request: UserByEmailRequestDto = Body(
     summary="allow to get a user info by its id",
     path=_path_provider.build_posix_path("search-by-id"),
     response_model=UserDataResponseDto,
-    status_code=status.HTTP_200_OK,
+    status_code=HttpStatus.HTTP_200_OK,
 )
 async def get_user_by_id(user_by_id_request: UserByIdRequestDto = Body(...)) -> UserDataResponseDto:
     user_by_email_response: UserDataResponseDto = await _user_service.get_user_by_id_orchestator(user_by_id_request)
@@ -56,7 +57,7 @@ async def get_user_by_id(user_by_id_request: UserByIdRequestDto = Body(...)) -> 
     summary="allow to get a user info by its document",
     path=_path_provider.build_posix_path("search-by-document"),
     response_model=UserDataResponseDto,
-    status_code=status.HTTP_200_OK,
+    status_code=HttpStatus.HTTP_200_OK,
 )
 async def get_user_by_document(user_by_document_request: UserByDocumentRequestDto = Body(...)) -> UserDataResponseDto:
     user_by_email_response: UserDataResponseDto = await _user_service.get_user_by_document_orchestator(user_by_document_request)

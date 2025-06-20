@@ -1,5 +1,5 @@
-from modules.account.mysql_entites.account_entity import AccountEntitie
-from modules.account.rest_controllers_dtos.account_dtos import AccountDataResponseDto
+from src.modules.account.mysql_entites.account_entity import AccountEntitie
+from src.modules.account.rest_controllers_dtos.account_dtos import AccountDataResponseDto
 
 
 class AccountMappers:
