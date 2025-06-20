@@ -46,6 +46,9 @@ The system exposes the following endpoints:
 
 ### REST Endpoints:
 
+available potsman collection at: `docs/postman/credit_core_system.postman_collection.json`
+available swagger at: `docs/swagger/swagger.json`
+
 #### Heart Beat
 
 - `POST /rest/heart-beat/`: System health check
@@ -77,6 +80,8 @@ The system exposes the following endpoints:
 - `POST /rest/credit-request-transition/make-transition`: Change the status of a credit request using a transition code
 
 ### GraphQL Endpoints:
+
+available potsman collection at: `docs/postman/credit_core_system.postman_collection.json`
 
 #### User Queries
 
